@@ -1,4 +1,4 @@
-package com.atguigu.eduservice.config;
+package com.atguigu.educms.config;
 
 import com.baomidou.mybatisplus.core.injector.ISqlInjector;
 import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
@@ -11,10 +11,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+
 @Configuration
-@MapperScan("com.atguigu.eduservice.mapper")
+@MapperScan("com.atguigu.educms.mapper")
 @EnableTransactionManagement
-public class EduConfig {
+public class CmsConfig {
 
     /**
      * 乐观锁插件

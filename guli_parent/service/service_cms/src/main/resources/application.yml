@@ -11,6 +11,15 @@ spring:
     username: root
     password: MySQL5.7
 
+    hikari:
+      connection-test-query: SELECT 1
+      connection-timeout: 60000
+      idle-timeout: 500000
+      max-lifetime: 540000
+      maximum-pool-size: 12
+      minimum-idle: 10
+      pool-name: GuliHikariPool
+
   # 返回json的全局时间格式
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
@@ -19,13 +28,37 @@ spring:
   profiles:
     active: dev
 
+  #springcloud nacos服务地址
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  redis:
+    host: 43.138.111.63
+    port: 6379
+    database: 0
+    timeout: 1800000
+    lettuce:
+      pool:
+        max-active: 20
+        max-wait: -1
+        #最大阻塞等待时间(负数表示没限制)
+        max-idle: 5
+        min-idle: 0
+
 ####  application-dev.yml
 server:
   port: 8005
+
 mybatis-plus:
   # mybatis-plus日志
-    configuration:
-      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   # 编译xml文件，将mapper的xml文件编译到target中，防止找不到mapper接口中的方法
-  mapper-locations: classpath:com/atguigu/eduservice/mapper/xml/*.xml
+  mapper-locations: classpath:com/atguigu/educms/mapper/xml/*.xml
+
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
 
