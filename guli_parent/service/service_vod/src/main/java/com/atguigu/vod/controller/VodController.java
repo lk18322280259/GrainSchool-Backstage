@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/eduvod/video")
 @CrossOrigin
@@ -30,5 +32,21 @@ public class VodController {
 
         String signature = vodService.getUploadSign();
         return R.ok().data("signature", signature);
+    }
+
+    //删除视频
+    @DeleteMapping("removeTencentVideo/{fileId}")
+    public R removeTencentVideoByFileId(@PathVariable String fileId) {
+
+        vodService.removeTencentVideoByFileId(fileId);
+        return R.ok();
+    }
+
+    //删除章节或者课程下面的多个视频
+    @DeleteMapping("delete-batch")
+    public R removeTencentVideoByFileIds(@RequestParam("videoList") List<String> videoList) {
+
+        vodService.removeTencentVideoByFileIds(videoList);
+        return R.ok();
     }
 }

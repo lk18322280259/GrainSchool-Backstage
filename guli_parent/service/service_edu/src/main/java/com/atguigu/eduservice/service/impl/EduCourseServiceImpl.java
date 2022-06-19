@@ -1,5 +1,6 @@
 package com.atguigu.eduservice.service.impl;
 
+import com.atguigu.eduservice.client.VodClient;
 import com.atguigu.eduservice.entity.EduChapter;
 import com.atguigu.eduservice.entity.EduCourse;
 import com.atguigu.eduservice.entity.EduCourseDescription;
@@ -51,6 +52,10 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     @Autowired
     private EduCourseMapper eduCourseMapper;
+
+    //微服务videoVod
+    @Autowired
+    private VodClient vodClient;
 
 
     //查询课程列表
@@ -228,7 +233,13 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     @Transactional
     public void removeCourse(String courseId) {
 
-        //1 根据课程id删除小节
+        //先查询磕碜是否发布，发布的课程不允许删除
+        EduCourse eduCourse = this.getById(courseId);
+        if ("Normal".equals(eduCourse.getStatus())) {
+            throw new GuliException(20001, "课程已发布，无法删除");
+        }
+
+        //1 根据课程id删除视频及课程小节
         eduVideoService.removeVideoByCourseId(courseId);
 
         //2 根据课程id删除章节

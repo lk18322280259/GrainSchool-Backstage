@@ -2,7 +2,7 @@
 spring:
 
   application:
-    name: service-edu
+    name: service-cms
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
@@ -10,15 +10,6 @@ spring:
     url: jdbc:mysql://43.138.111.63:3306/guli?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: MySQL5.7
-
-    hikari:
-      connection-test-query: SELECT 1
-      connection-timeout: 60000
-      idle-timeout: 500000
-      max-lifetime: 540000
-      maximum-pool-size: 12
-      minimum-idle: 10
-      pool-name: GuliHikariPool
 
   # 返回json的全局时间格式
   jackson:
@@ -28,38 +19,13 @@ spring:
   profiles:
     active: dev
 
-  #springcloud nacos服务地址
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
-
-# 设置日志级别
-#logging:
-#  level:
-#    root: INFO
-
 ####  application-dev.yml
 server:
-  port: 8001
+  port: 8005
 mybatis-plus:
   # mybatis-plus日志
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
+    configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   # 编译xml文件，将mapper的xml文件编译到target中，防止找不到mapper接口中的方法
   mapper-locations: classpath:com/atguigu/eduservice/mapper/xml/*.xml
 
-  global-config:
-    db-config:
-      logic-delete-value: 1
-      logic-not-delete-value: 0
-
-# 自定义参数
-custom-parameters:
-  enable-cloud-delete-vod: true
-
-# 开启熔断机制
-feign:
-  hystrix:
-    enabled: true
