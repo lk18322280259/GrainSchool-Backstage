@@ -1,7 +1,7 @@
-package com.atguigu.controller;
+package com.atguigu.msmservice.controller;
 
 import com.atguigu.commonutils.R;
-import com.atguigu.service.CosService;
+import com.atguigu.msmservice.service.CosService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -25,7 +25,7 @@ public class CosController {
     @PostMapping
     @ApiOperation("Cos文件上传接口")
     public R uploadOssFile(
-            @ApiParam(name = "file", value = "前端文件实体", required = true)
+            @ApiParam(name = "file", value = "前端文件", required = true)
             MultipartFile file) {
 
         //获取上传文件 MultipartFile

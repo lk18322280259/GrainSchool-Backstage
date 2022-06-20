@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Api("前台查看幻灯片")
 @RestController
 @RequestMapping("/educms/bannerfront")
 @CrossOrigin
-@Api("前台查看")
 public class BannerFrontController {
 
     @Autowired

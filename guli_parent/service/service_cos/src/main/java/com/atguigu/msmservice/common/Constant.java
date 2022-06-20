@@ -1,4 +1,4 @@
-package com.atguigu.common;
+package com.atguigu.msmservice.common;
 
 public class Constant {
 

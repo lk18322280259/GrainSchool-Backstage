@@ -5,6 +5,7 @@ import com.atguigu.commonutils.R;
 import com.atguigu.educms.entity.CrmBanner;
 import com.atguigu.educms.service.CrmBannerService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
  * @author testjava
  * @since 2022-06-19
  */
+@Api("幻灯片后台管理")
 @RestController
 @RequestMapping("/educms/banneradmin")
 @CrossOrigin
@@ -42,7 +44,9 @@ public class BannerAdminController {
 
     @ApiOperation(value = "新增Banner")
     @PostMapping("addBanner")
-    public R save(@RequestBody CrmBanner banner) {
+    public R save(
+            @ApiParam(name = "banner", value = "幻灯片实体", required = true)
+            @RequestBody CrmBanner banner) {
 
         bannerService.save(banner);
         return R.ok();
@@ -51,7 +55,9 @@ public class BannerAdminController {
 
     @ApiOperation(value = "获取Banner")
     @GetMapping("get/{id}")
-    public R get(@PathVariable String id) {
+    public R get(
+            @ApiParam(name = "id", value = "幻灯片ID", required = true)
+            @PathVariable String id) {
 
         CrmBanner banner = bannerService.getById(id);
         return R.ok().data("item", banner);
@@ -59,7 +65,9 @@ public class BannerAdminController {
 
     @ApiOperation(value = "修改Banner")
     @PutMapping("update")
-    public R updateById(@RequestBody CrmBanner banner) {
+    public R updateById(
+            @ApiParam(name = "banner", value = "幻灯片实体", required = true)
+            @RequestBody CrmBanner banner) {
 
         bannerService.updateById(banner);
         return R.ok();
@@ -67,7 +75,9 @@ public class BannerAdminController {
 
     @ApiOperation(value = "删除Banner")
     @DeleteMapping("remove/{id}")
-    public R remove(@PathVariable String id) {
+    public R remove(
+            @ApiParam(name = "id", value = "幻灯片ID", required = true)
+            @PathVariable String id) {
 
         bannerService.removeById(id);
         return R.ok();

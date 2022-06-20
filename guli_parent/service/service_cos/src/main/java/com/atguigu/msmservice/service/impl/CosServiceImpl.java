@@ -1,7 +1,7 @@
-package com.atguigu.service.impl;
+package com.atguigu.msmservice.service.impl;
 
-import com.atguigu.common.Constant;
-import com.atguigu.service.CosService;
+import com.atguigu.msmservice.common.Constant;
+import com.atguigu.msmservice.service.CosService;
 import com.atguigu.servicebase.exceptionhandler.GuliException;
 import com.qcloud.cos.model.ObjectMetadata;
 import com.qcloud.cos.model.PutObjectRequest;
@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
-import static com.atguigu.utils.CosUtils.createTransferManager;
-import static com.atguigu.utils.CosUtils.shutdownTransferManager;
+import static com.atguigu.msmservice.utils.CosUtils.createTransferManager;
+import static com.atguigu.msmservice.utils.CosUtils.shutdownTransferManager;
 
 @Service
 public class CosServiceImpl implements CosService {

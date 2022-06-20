@@ -1,6 +1,6 @@
-package com.atguigu.utils;
+package com.atguigu.msmservice.utils;
 
-import com.atguigu.common.Constant;
+import com.atguigu.msmservice.common.Constant;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.BasicCOSCredentials;
@@ -9,7 +9,6 @@ import com.qcloud.cos.http.HttpProtocol;
 import com.qcloud.cos.region.Region;
 import com.qcloud.cos.transfer.TransferManager;
 import com.qcloud.cos.transfer.TransferManagerConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ExecutorService;
