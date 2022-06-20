@@ -4,7 +4,8 @@ import com.atguigu.commonutils.JwtUtils;
 import com.atguigu.commonutils.MD5;
 import com.atguigu.educenter.entity.UcenterMember;
 import com.atguigu.educenter.entity.vo.RegisterVo;
-import com.atguigu.educenter.entity.vo.UserLoginVo;
+import com.atguigu.educenter.entity.vo.PwdLoginVo;
+import com.atguigu.educenter.entity.vo.VerCodeLoginVo;
 import com.atguigu.educenter.mapper.UcenterMemberMapper;
 import com.atguigu.educenter.service.UcenterMemberService;
 import com.atguigu.servicebase.exceptionhandler.GuliException;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author LuoKai
  * @since 2022-06-20
  */
+@SuppressWarnings("DuplicatedCode")
 @Service
 public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, UcenterMember> implements UcenterMemberService {
 
@@ -34,10 +36,10 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
 
     //实现单点登录
     @Override
-    public String login(UserLoginVo member) {
+    public String loginByPwd(PwdLoginVo pwdLoginVo) {
 
-        String mobile = member.getMobile();
-        String password = member.getPassword();
+        String mobile = pwdLoginVo.getMobile();
+        String password = pwdLoginVo.getPassword();
 
         if(StringUtils.isEmpty(mobile) || StringUtils.isEmpty(password)) {
             throw new GuliException(20001, "手机号和密码不能同时为空");
@@ -68,6 +70,64 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
 
         //状态正常，允许登录，生成token
         String token = JwtUtils.getJwtToken(mobileMember.getId(), mobileMember.getPassword());
+
+        return token;
+    }
+
+    //验证码登录
+    @Override
+    public String loginByCode(VerCodeLoginVo verCodeLoginVo) {
+
+        String mobile = verCodeLoginVo.getMobile();
+        String code = verCodeLoginVo.getCode();
+
+        if(StringUtils.isEmpty(mobile) || StringUtils.isEmpty(code)) {
+            throw new GuliException(20001, "手机号和验证码不能同时为空");
+        }
+
+        //从redis中取出密码
+        String redisCode = redisTemplate.opsForValue().get(mobile);
+        if(!code.equals(redisCode)) {
+            throw new GuliException(20001, "验证码错误");
+        }
+
+        //验证码正确
+        //判断手机号是否注册过
+        LambdaQueryWrapper<UcenterMember> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(UcenterMember::getMobile, mobile);
+        UcenterMember mobileMember = this.getOne(wrapper);
+
+        String memberId = "";
+        String memberPwd = "";
+
+        //用户未注册过
+        if (mobileMember==null) {
+            //将用户账号信息写入数据库
+            UcenterMember member = new UcenterMember();
+
+            member.setMobile(mobile);
+            member.setPassword(MD5.encrypt("123456")); //为用户设置默认密码
+            member.setNickname("用户"+mobile); //为用户设置默认姓名
+            member.setIsDisabled(false); //用户未禁用
+            member.setAvatar("https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+            this.save(member);
+
+            memberId = member.getId();
+            memberPwd = member.getPassword();
+        } else {
+            //用户注册过
+            //判断状态
+            if (mobileMember.getIsDisabled()) {
+                throw new GuliException(20001, "账号已被禁用");
+            }
+
+            memberId = mobileMember.getId();
+            memberPwd = mobileMember.getPassword();
+        }
+
+
+        //状态正常，允许登录，生成token
+        String token = JwtUtils.getJwtToken(memberId, memberPwd);
 
         return token;
     }
@@ -127,4 +187,12 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
 
         return member;
     }
+
+    //展示个人信息
+    @Override
+    public UcenterMember showUserInfo(String userId) {
+        UcenterMember member = this.getById(userId);
+        return member;
+    }
+
 }
