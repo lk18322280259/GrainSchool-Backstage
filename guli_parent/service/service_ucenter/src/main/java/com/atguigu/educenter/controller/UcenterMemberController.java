@@ -32,7 +32,11 @@ public class UcenterMemberController {
     @Autowired
     private UcenterMemberService memberService;
 
-    //密码登录
+    /**
+     * 密码登录
+     * @param pwdLoginVo 密码登录对象
+     * @return token
+     */
     @PostMapping("loginByPwd")
     @ApiOperation("用户验证码登录接口")
     public R loginByPwd(
@@ -44,7 +48,11 @@ public class UcenterMemberController {
         return R.ok().data("token", token);
     }
 
-    //验证码登录
+    /**
+     * 验证码登录
+     * @param verCodeLoginVo 验证码登录对象
+     * @return token
+     */
     @PostMapping("loginByCode")
     @ApiOperation("用户密码登录接口")
     public R loginByCode(
@@ -56,7 +64,11 @@ public class UcenterMemberController {
         return R.ok().data("token", token);
     }
 
-    //注册
+    /**
+     * 注册
+     * @param registerVo 注册对象
+     * @return 注册成功
+     */
     @ApiOperation(value = "会员注册")
     @PostMapping("register")
     public R register(
@@ -67,7 +79,11 @@ public class UcenterMemberController {
         return R.ok();
     }
 
-    //根据token获取用户信息
+    /**
+     * 根据token获取用户信息
+     * @param request 请求对象
+     * @return 用户信息
+     */
     @ApiOperation(value = "解析token获取用户信息")
     @GetMapping("getMemberInfo")
     public R getMemberInfo(
@@ -78,7 +94,11 @@ public class UcenterMemberController {
         return R.ok().data("userInfo",member);
     }
 
-    //展示个人信息
+    /**
+     * 展示个人信息
+     * @param userId 用户id
+     * @return 用户信息
+     */
     @ApiOperation(value = "展示个人信息")
     @GetMapping("showUserInfo/{userId}")
     public R showUserInfo(

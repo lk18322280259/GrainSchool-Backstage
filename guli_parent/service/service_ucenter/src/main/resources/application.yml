@@ -63,3 +63,7 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
 
+# 自定义参数
+custom-parameters:
+  # 用户默认头像
+  default-avatar: https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif

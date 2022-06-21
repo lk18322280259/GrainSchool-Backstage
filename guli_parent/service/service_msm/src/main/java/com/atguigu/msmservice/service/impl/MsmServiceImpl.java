@@ -18,7 +18,9 @@ public class MsmServiceImpl implements MsmService {
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
-    // 腾讯云短信相关参数
+    /**
+     * 腾讯云短信相关参数
+     */
     @Value("${custom-parameters.send-msg.secret-id}")
     private String secretId;
     @Value("${custom-parameters.send-msg.secret-key}")
@@ -36,7 +38,10 @@ public class MsmServiceImpl implements MsmService {
     @Value("${custom-parameters.send-msg.enable}")
     private String sendMsgEnable;
 
-    //发送验证码
+
+    /**
+     * 发送验证码
+     */
     @Override
     public String sendTencentMsg(String phone) {
 

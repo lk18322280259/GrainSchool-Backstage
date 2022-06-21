@@ -12,6 +12,7 @@ import com.atguigu.servicebase.exceptionhandler.GuliException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -26,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author LuoKai
  * @since 2022-06-20
  */
-@SuppressWarnings("DuplicatedCode")
+@SuppressWarnings({"DuplicatedCode", "SpringJavaAutowiredFieldsWarningInspection"})
 @Service
 public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, UcenterMember> implements UcenterMemberService {
 
@@ -34,7 +35,12 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
-    //实现单点登录
+    @Value("${custom-parameters.default-avatar}")
+    private String defaultAvatar;
+
+    /**
+     * 实现单点登录
+     */
     @Override
     public String loginByPwd(PwdLoginVo pwdLoginVo) {
 
@@ -74,7 +80,9 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         return token;
     }
 
-    //验证码登录
+    /**
+     * 验证码登录
+     */
     @Override
     public String loginByCode(VerCodeLoginVo verCodeLoginVo) {
 
@@ -106,10 +114,13 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
             UcenterMember member = new UcenterMember();
 
             member.setMobile(mobile);
-            member.setPassword(MD5.encrypt("123456")); //为用户设置默认密码
-            member.setNickname("用户"+mobile); //为用户设置默认姓名
-            member.setIsDisabled(false); //用户未禁用
-            member.setAvatar("https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+            //为用户设置默认密码
+            member.setPassword(MD5.encrypt("123456"));
+            //为用户设置默认姓名
+            member.setNickname("用户"+mobile);
+            //用户未禁用
+            member.setIsDisabled(false);
+            member.setAvatar(defaultAvatar);
             this.save(member);
 
             memberId = member.getId();
@@ -132,7 +143,9 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         return token;
     }
 
-    //用户注册
+    /**
+     * 用户注册
+     */
     @Override
     public void register(RegisterVo registerVo) {
 
@@ -167,7 +180,8 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         ucenterMember.setMobile(mobile);
         ucenterMember.setPassword(MD5.encrypt(password));
         ucenterMember.setNickname(nickname);
-        ucenterMember.setIsDisabled(false); //用户未禁用
+        //用户未禁用
+        ucenterMember.setIsDisabled(false);
         ucenterMember.setAvatar("https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
         this.save(ucenterMember);
 
@@ -176,7 +190,9 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
 
     }
 
-    //解析token获取用户信息
+    /**
+     * 解析token获取用户信息
+     */
     @Override
     public UcenterMember getMemberInfo(HttpServletRequest request) {
 
@@ -188,7 +204,9 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         return member;
     }
 
-    //展示个人信息
+    /**
+     * 展示个人信息
+     */
     @Override
     public UcenterMember showUserInfo(String userId) {
         UcenterMember member = this.getById(userId);

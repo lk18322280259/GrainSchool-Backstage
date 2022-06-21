@@ -18,18 +18,38 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface UcenterMemberService extends IService<UcenterMember> {
 
-    //实现单点登录
+    /**
+     * 实现单点登录
+     * @param pwdLoginVo 密码登陆对象
+     * @return token
+     */
     String loginByPwd(PwdLoginVo pwdLoginVo);
 
-    //验证码登录
+    /**
+     * 验证码登录
+     * @param verCodeLoginVo 验证码登录对象
+     * @return token
+     */
     String loginByCode(VerCodeLoginVo verCodeLoginVo);
 
-    //用户注册
+
+    /**
+     * 用户注册
+     * @param registerVo 注册对象
+     */
     void register(RegisterVo registerVo);
 
-    //解析token获取用户信息
+    /**
+     * 解析token获取用户信息
+     * @param request 请求对象
+     * @return UcenterMember实体类
+     */
     UcenterMember getMemberInfo(HttpServletRequest request);
 
-    //展示个人信息
+    /**
+     * 展示个人信息
+     * @param userId 用户ID
+     * @return UcenterMember实体类
+     */
     UcenterMember showUserInfo(String userId);
 }
