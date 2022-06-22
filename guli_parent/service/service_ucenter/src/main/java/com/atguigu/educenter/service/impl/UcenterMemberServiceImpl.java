@@ -8,16 +8,22 @@ import com.atguigu.educenter.entity.vo.PwdLoginVo;
 import com.atguigu.educenter.entity.vo.VerCodeLoginVo;
 import com.atguigu.educenter.mapper.UcenterMemberMapper;
 import com.atguigu.educenter.service.UcenterMemberService;
+import com.atguigu.educenter.utils.Constant;
+import com.atguigu.educenter.utils.HttpClientUtils;
 import com.atguigu.servicebase.exceptionhandler.GuliException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+
 
 /**
  * <p>
@@ -34,9 +40,6 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
 
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
-
-    @Value("${custom-parameters.default-avatar}")
-    private String defaultAvatar;
 
     /**
      * 实现单点登录
@@ -120,7 +123,7 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
             member.setNickname("用户"+mobile);
             //用户未禁用
             member.setIsDisabled(false);
-            member.setAvatar(defaultAvatar);
+            member.setAvatar(Constant.USER_DEFAULT_AVATAR);
             this.save(member);
 
             memberId = member.getId();
@@ -211,6 +214,150 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
     public UcenterMember showUserInfo(String userId) {
         UcenterMember member = this.getById(userId);
         return member;
+    }
+
+    /**
+     * 根据微信扫码查询数据库是否存在用户
+     * @param openid 微信用户openid
+     * @return 用户类
+     */
+    @Override
+    public UcenterMember getOpenIdMember(String openid) {
+
+        LambdaQueryWrapper<UcenterMember> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(UcenterMember::getOpenid, openid);
+        UcenterMember member = this.getOne(wrapper);
+        return member;
+    }
+
+    /**
+     * 生成二维码的链接重定向显示二维码
+     *
+     * @return 重定向到二维码页面链接
+     */
+    @Override
+    public String getWxCode() {
+
+        // 微信开放平台授权baseUrl
+        String baseUrl = "https://open.weixin.qq.com/connect/qrconnect" +
+                "?appid=%s" +
+                "&redirect_uri=%s" +
+                "&response_type=code" +
+                "&scope=snsapi_login" +
+                "&state=%s" +
+                "#wechat_redirect";
+
+        // 回调地址
+        //获取业务服务器重定向地址
+        String redirectUrl = Constant.WX_OPEN_REDIRECT_URL;
+        try {
+            //url编码
+            redirectUrl = URLEncoder.encode(redirectUrl, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new GuliException(20001, e.getMessage());
+        }
+
+        // 防止csrf攻击（跨站请求伪造攻击）
+        //String state = UUID.randomUUID().toString().replaceAll("-", "");//一般情况下会使用一个随机数
+        //为了让大家能够使用我搭建的外网的微信回调跳转服务器，这里填写你在ngrok的前置域名
+        String state = "atguigu";
+
+        // 采用redis等进行缓存state 使用sessionId为key 30分钟后过期，可配置
+        //键："wechar-open-state-" + httpServletRequest.getSession().getId()
+        //值：satte
+        //过期时间：30分钟
+
+        //生成qrcodeUrl
+        String qrcodeUrl = String.format(
+                baseUrl,
+                Constant.WX_OPEN_APP_ID,
+                redirectUrl,
+                state);
+
+        return qrcodeUrl;
+    }
+
+    /**
+     * 从code中获取用户信息并生成token
+     * @return token
+     */
+    @Override
+    public String getCallBackToken(String code, String state) {
+
+        //1 获取code值，临时票据，类似于验证码
+
+        //2 拿着code请求微信固定的地址，得到两个值 access_token 和 openid
+        String baseAccessTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token" +
+                "?appid=%s" +
+                "&secret=%s" +
+                "&code=%s" +
+                "&grant_type=authorization_code";
+
+        String accessTokenUrl = String.format(baseAccessTokenUrl,
+                Constant.WX_OPEN_APP_ID,
+                Constant.WX_OPEN_APP_SECRET,
+                code);
+
+        //使用拼接好的地址，得到 access_token 和 openid
+        //使用httpclient发送请求，得到返回结果
+        try {
+            String accessTokenInfo = HttpClientUtils.get(accessTokenUrl);
+
+            System.out.println(accessTokenInfo);
+
+            //从accessTokenInfo字符串获取出来两个值access_token 和 openid
+            //把accessTokenInfo字符串转换map集合，根据map里面key获取对应值
+            //使用json转换工具 Gson
+            Gson gson = new Gson();
+            HashMap mapAccessToken = gson.fromJson(accessTokenInfo, HashMap.class);
+
+            String accessToken = (String) mapAccessToken.get("access_token");
+            double expiresIn = (double) mapAccessToken.get("expires_in");
+            String refreshToken = (String) mapAccessToken.get("refresh_token");
+            String openid = (String) mapAccessToken.get("openid");
+            String scope = (String) mapAccessToken.get("scope");
+            String unionid = (String) mapAccessToken.get("unionid");
+
+            //判断数据库中是否存在相同微信信息，根据openid判断
+            UcenterMember member = this.getOpenIdMember(openid);
+            //member为空，需要新增到数据库
+            if (member == null) {
+
+                //访问微信的资源服务器，获取用户信息
+                String baseUserInfoUrl = "https://api.weixin.qq.com/sns/userinfo" +
+                        "?access_token=%s" +
+                        "&openid=%s";
+
+                String userInfoUrl = String.format(
+                        baseUserInfoUrl,
+                        accessToken,
+                        openid);
+
+                String resultUserInfo = HttpClientUtils.get(userInfoUrl);
+                System.out.println("resultUserInfo==========" + resultUserInfo);
+
+                HashMap userInfoMap = gson.fromJson(resultUserInfo, HashMap.class);
+                //昵称
+                String nickname = (String) userInfoMap.get("nickname");
+                //头像
+                String headimgurl = (String) userInfoMap.get("headimgurl");
+
+                member = new UcenterMember();
+                member.setOpenid(openid);
+                member.setNickname(nickname);
+                member.setAvatar(headimgurl);
+
+                this.save(member);
+            }
+
+            //使用jwt根据member对象生成token
+            String token = JwtUtils.getJwtToken(member.getId(), member.getNickname());
+
+            return token;
+
+        } catch (Exception e) {
+            throw new GuliException(20001, "登陆失败");
+        }
     }
 
 }

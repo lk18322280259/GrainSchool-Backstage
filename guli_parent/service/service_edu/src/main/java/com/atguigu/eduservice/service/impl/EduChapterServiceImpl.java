@@ -33,7 +33,12 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
     @Autowired
     private EduVideoService videoService;
 
-    //课程大纲列表，根据课程id进行查询
+
+    /**
+     * 课程大纲列表，根据课程id进行查询
+     * @param courseId 课程id
+     * @return 课程大纲列表
+     */
     @Override
     public List<ChapterVo> getChapterVideoByCourseId(String courseId) {
 
@@ -78,7 +83,10 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         return finalList;
     }
 
-    //添加章节
+    /**
+     * 添加章节
+     * @param eduChapter 章节对象
+     */
     @Override
     public void addChapter(EduChapter eduChapter) {
 
@@ -88,7 +96,11 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         }
     }
 
-    //根据id查询章节
+    /**
+     * 根据id查询章节
+     * @param chapterId 章节id
+     * @return 章节
+     */
     @Override
     public EduChapter getChapterById(String chapterId) {
 
@@ -99,7 +111,10 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         return eduChapter;
     }
 
-    //修改章节
+    /**
+     * 修改章节
+     * @param eduChapter 章节对象
+     */
     @Override
     public void updateChapter(EduChapter eduChapter) {
 
@@ -109,7 +124,11 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         }
     }
 
-    //删除章节
+    /**
+     * 删除章节
+     * @param chapterId 章节id
+     */
+    @SuppressWarnings("AlibabaRemoveCommentedCode")
     @Override
     @Transactional
     public void deleteChapter(String chapterId) {
@@ -138,7 +157,10 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         }
     }
 
-    //根据课程id删除章节
+    /**
+     * 根据课程id删除章节
+     * @param courseId 课程id
+     */
     @Override
     public void removeChapterByCourseId(String courseId) {
 

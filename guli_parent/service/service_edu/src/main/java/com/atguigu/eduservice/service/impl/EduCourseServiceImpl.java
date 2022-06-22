@@ -1,10 +1,9 @@
 package com.atguigu.eduservice.service.impl;
 
 import com.atguigu.eduservice.client.VodClient;
-import com.atguigu.eduservice.entity.EduChapter;
-import com.atguigu.eduservice.entity.EduCourse;
-import com.atguigu.eduservice.entity.EduCourseDescription;
-import com.atguigu.eduservice.entity.EduVideo;
+import com.atguigu.eduservice.entity.*;
+import com.atguigu.eduservice.entity.frontvo.CourseFrontVo;
+import com.atguigu.eduservice.entity.frontvo.CourseWebVo;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
 import com.atguigu.eduservice.entity.vo.CoursePublishVo;
 import com.atguigu.eduservice.entity.vo.CourseQueryVo;
@@ -24,7 +23,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -35,7 +36,7 @@ import java.util.List;
  * @since 2022-06-12
  */
 @Service
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "SpringJavaAutowiredFieldsWarningInspection", "DuplicatedCode"})
 public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse> implements EduCourseService {
 
     @Autowired
@@ -53,12 +54,17 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     @Autowired
     private EduCourseMapper eduCourseMapper;
 
-    //微服务videoVod
+    /**
+     * 微服务videoVod
+     */
     @Autowired
     private VodClient vodClient;
 
 
-    //查询课程列表
+    /**
+     * 查询课程列表
+     * @return 课程列表
+     */
     @Override
     public List<EduCourse> getCourseList() {
         LambdaQueryWrapper<EduCourse> wrapper = new LambdaQueryWrapper<>();
@@ -72,7 +78,12 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         return courseList;
     }
 
-    //分页查询课程
+    /**
+     * 分页查询课程
+     * @param current 当前页
+     * @param limit 每页记录数
+     * @return 分页结果
+     */
     @Override
     public IPage<EduCourse> getPageCourse(long current, long limit) {
 
@@ -90,7 +101,13 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         return iPage;
     }
 
-    //带条件分页查询
+    /**
+     * 带条件分页查询
+     * @param current 当前页
+     * @param limit 每页记录数
+     * @param courseQueryVo 条件查询
+     * @return 分页带条件结果
+     */
     @Override
     public IPage<EduCourse> getPageCourseCondition(long current, long limit, CourseQueryVo courseQueryVo) {
 
@@ -129,7 +146,11 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         return iPage;
     }
 
-    //添加课程基本信息的方法
+    /**
+     * 添加课程基本信息的方法
+     * @param courseInfoVo 课程信息封装
+     * @return 课程id
+     */
     @Override
     @Transactional
     public String saveCourseInfo(CourseInfoVo courseInfoVo) {
@@ -161,7 +182,11 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         return courseId;
     }
 
-    //根据课程id查询课程的基本信息
+    /**
+     * 根据课程id查询课程的基本信息
+     * @param courseId 课程id
+     * @return 课程信息封装
+     */
     @Override
     public CourseInfoVo getCourseInfo(String courseId) {
 
@@ -179,9 +204,12 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         return courseInfoVo;
     }
 
-    //修改课程信息
+    /**
+     * 修改课程信息
+     * @param courseInfoVo 课程信息封装
+     */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void updateCourseInfo(CourseInfoVo courseInfoVo) {
 
         //1 修改课程表
@@ -203,7 +231,11 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     }
 
-    //根据课程id查询课程确认信息
+    /**
+     * 根据课程id查询课程确认信息
+     * @param courseId 课程id
+     * @return 最终发布页面显示数据
+     */
     @Override
     public CoursePublishVo publishCourseInfo(String courseId) {
 
@@ -214,7 +246,10 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         return publishCourseInfo;
     }
 
-    //课程最终发布(修改课程状态)
+    /**
+     * 课程最终发布(修改课程状态)
+     * @param courseId 课程id
+     */
     @Override
     public void updateCourseStatus(String courseId) {
 
@@ -228,14 +263,18 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         }
     }
 
-    //删除课程
+    /**
+     * 删除课程
+     * @param courseId 课程id
+     */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void removeCourse(String courseId) {
 
         //先查询磕碜是否发布，发布的课程不允许删除
         EduCourse eduCourse = this.getById(courseId);
-        if ("Normal".equals(eduCourse.getStatus())) {
+        String normal = "Normal";
+        if (normal.equals(eduCourse.getStatus())) {
             throw new GuliException(20001, "课程已发布，无法删除");
         }
 
@@ -255,7 +294,10 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         }
     }
 
-    //修改课程状态
+    /**
+     * 修改课程状态
+     * @param courseId 课程id
+     */
     @Override
     public void changeStatus(String courseId) {
 
@@ -275,7 +317,11 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         }
     }
 
-    //修改浏览数
+    /**
+     * 修改浏览数
+     * @param id 课程id
+     * @param viewCount 修改后的课程浏览数
+     */
     @Override
     public void changeViewCount(String id, Long viewCount) {
 
@@ -289,7 +335,11 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         }
     }
 
-    //修改购买数
+    /**
+     * 修改购买数
+     * @param id 课程id
+     * @param buyCount 修改后的购买数量
+     */
     @Override
     public void changeBuyCount(String id, Long buyCount) {
 
@@ -301,6 +351,78 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         if (!update) {
             throw new GuliException(20001, "购买数修改失败");
         }
+    }
+
+    /**
+     * 分页带条件查询课程
+     * @param coursePage    分页
+     * @param courseFrontVo 条件查询
+     * @return 分页带条件的课程整合
+     */
+    @Override
+    public Map<String, Object> getCourseFrontList(Page<EduCourse> coursePage, CourseFrontVo courseFrontVo) {
+
+        LambdaQueryWrapper<EduCourse> wrapper = new LambdaQueryWrapper<>();
+        String publishStatus = "Normal";
+        wrapper.eq(EduCourse::getStatus, publishStatus);
+        wrapper.eq(StringUtils.isNotEmpty(courseFrontVo.getSubjectParentId()), EduCourse::getSubjectParentId, courseFrontVo.getSubjectParentId());
+        wrapper.eq(StringUtils.isNotEmpty(courseFrontVo.getSubjectId()), EduCourse::getSubjectId, courseFrontVo.getSubjectId());
+
+
+        if (StringUtils.isNotEmpty(courseFrontVo.getBuyCountSort())){
+            wrapper.orderByDesc(EduCourse::getBuyCount);
+        }
+        if (StringUtils.isNotEmpty(courseFrontVo.getGmtCreateSort())){
+            wrapper.orderByDesc(EduCourse::getGmtCreate);
+        }
+        if (StringUtils.isNotEmpty(courseFrontVo.getPriceSort())){
+            wrapper.orderByDesc(EduCourse::getPrice);
+        }
+
+        this.page(coursePage, wrapper);
+
+        List<EduCourse> records = coursePage.getRecords();
+        long current = coursePage.getCurrent();
+        long pages = coursePage.getPages();
+        long size = coursePage.getSize();
+        long total = coursePage.getTotal();
+        boolean hasNext = coursePage.hasNext();
+        boolean hasPrevious = coursePage.hasPrevious();
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("items", records);
+        map.put("current", current);
+        map.put("pages", pages);
+        map.put("size", size);
+        map.put("total", total);
+        map.put("hasNext", hasNext);
+        map.put("hasPrevious", hasPrevious);
+
+        return map;
+    }
+
+    /**
+     * 获取课程信息
+     * @param id 课程id
+     * @return 课程信息
+     */
+    @Override
+    public CourseWebVo selectInfoWebById(String id) {
+
+        this.updatePageViewCount(id);
+        return eduCourseMapper.selectInfoWebById(id);
+    }
+
+    /**
+     * 自增课程浏览数
+     * @param id 课程id
+     */
+    @Override
+    public void updatePageViewCount(String id) {
+
+        EduCourse eduCourse = this.getById(id);
+        Long viewCount = eduCourse.getViewCount();
+        this.changeViewCount(id,++viewCount);
     }
 
 }

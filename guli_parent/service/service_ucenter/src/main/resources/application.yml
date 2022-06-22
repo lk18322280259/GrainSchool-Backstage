@@ -49,7 +49,7 @@ spring:
 
 ####  application-dev.yml
 server:
-  port: 8007
+  port: 8160
 
 mybatis-plus:
   # mybatis-plus日志
@@ -65,5 +65,16 @@ mybatis-plus:
 
 # 自定义参数
 custom-parameters:
-  # 用户默认头像
-  default-avatar: https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif
+  # 用户注册参数
+  register-param:
+    # 用户默认头像
+    default-avatar: https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif
+  # 微信登录参数
+  wx-open-param:
+    # 微信开放平台 appid
+    app-id: wxed9954c01bb89b47
+    # 微信开放平台 appsecret
+    app-secret: a7482517235173ddb4083788de60b90e
+    # 微信开放平台 重定向url
+    redirect-url: http://localhost:8160/api/ucenter/wx/callback
+

@@ -7,6 +7,7 @@ import com.atguigu.eduservice.service.EduCourseService;
 import com.atguigu.eduservice.service.EduTeacherService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/eduservice/indexfront")
 @CrossOrigin
-@Api("前台查看")
+@Api("前台查看首页信息")
 public class IndexFrontController {
 
     @Autowired
@@ -27,8 +28,12 @@ public class IndexFrontController {
     @Autowired
     private EduTeacherService teacherService;
 
-    // 查询前8个门课程，查询前4名讲师
+    /**
+     * 查询前8个热门课程，查询前4名讲师
+     * @return 8个热门课程和4个名师
+     */
     @SuppressWarnings("unchecked")
+    @ApiOperation("查询8个热门课程和4个名师接口")
     @GetMapping("index")
     public R index() {
 

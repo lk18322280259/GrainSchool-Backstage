@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * @Author luokai
+ */
 @Data
 public class CoursePublishVo implements Serializable {
 
@@ -31,6 +34,9 @@ public class CoursePublishVo implements Serializable {
     @ApiModelProperty(value = "讲师姓名")
     private String teacherName;
 
+    /**
+     * 只用于显示
+     */
     @ApiModelProperty(value = "课程价格")
-    private String price;//只用于显示
+    private String price;
 }

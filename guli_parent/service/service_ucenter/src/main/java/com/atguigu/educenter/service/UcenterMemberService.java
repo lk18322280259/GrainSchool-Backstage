@@ -52,4 +52,27 @@ public interface UcenterMemberService extends IService<UcenterMember> {
      * @return UcenterMember实体类
      */
     UcenterMember showUserInfo(String userId);
+
+    /**
+     * 根据微信扫码查询数据库是否存在用户
+     * @param openid 微信用户openid
+     * @return 用户类
+     */
+    UcenterMember getOpenIdMember(String openid);
+
+    /**
+     * 生成二维码的链接重定向显示二维码
+     *
+     * @return 重定向到二维码页面链接
+     */
+    String getWxCode();
+
+    /**
+     * 从code中获取用户信息并生成token
+     * @param code 二维码code
+     * @param state 二维码state
+     * @return token
+     */
+    String getCallBackToken(String code, String state);
+
 }
