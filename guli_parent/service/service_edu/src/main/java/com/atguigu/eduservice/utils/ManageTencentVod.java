@@ -9,19 +9,22 @@ import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.vod.v20180717.VodClient;
 import com.tencentcloudapi.vod.v20180717.models.*;
 
+/**
+ * @Author luokai
+ */
 public class ManageTencentVod
 {
 
-    public final static String secretId = Constant.secretId;
-    public final static String secretKey = Constant.secretKey;
-    public final static String region = Constant.region;
+    public final static String SECRET_ID = Constant.secretId;
+    public final static String SECRET_KEY = Constant.secretKey;
+    public final static String REGION = Constant.region;
 
     public static Boolean deleteVod(String fileId) {
 
         try{
             // 实例化一个认证对象，入参需要传入腾讯云账户secretId，secretKey,此处还需注意密钥对的保密
             // 密钥可前往https://console.cloud.tencent.com/cam/capi网站进行获取
-            Credential cred = new Credential(secretId, secretKey);
+            Credential cred = new Credential(SECRET_ID, SECRET_KEY);
             // 实例化一个http选项，可选的，没有特殊需求可以跳过
             HttpProfile httpProfile = new HttpProfile();
             httpProfile.setEndpoint("vod.tencentcloudapi.com");
@@ -29,7 +32,7 @@ public class ManageTencentVod
             ClientProfile clientProfile = new ClientProfile();
             clientProfile.setHttpProfile(httpProfile);
             // 实例化要请求产品的client对象,clientProfile是可选的
-            VodClient client = new VodClient(cred, region, clientProfile);
+            VodClient client = new VodClient(cred, REGION, clientProfile);
             // 实例化一个请求对象,每个接口都会对应一个request对象
             DeleteMediaRequest req = new DeleteMediaRequest();
             req.setFileId(fileId);

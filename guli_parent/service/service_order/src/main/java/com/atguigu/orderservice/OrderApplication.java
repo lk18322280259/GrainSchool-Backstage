@@ -1,5 +1,7 @@
-package com.atguigu.eduservice;
+package com.atguigu.orderservice;
 
+
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -9,16 +11,15 @@ import org.springframework.context.annotation.ComponentScan;
 /**
  * @Author luokai
  */
-@SpringBootApplication
-//扫描service中的swagger
-@ComponentScan(basePackages = {"com.atguigu"})
-//服务注册注解
-@EnableDiscoveryClient
 //发现服务
 @EnableFeignClients
-public class EduApplication {
-
+@EnableDiscoveryClient
+@SpringBootApplication
+@ComponentScan(basePackages = {"com.atguigu"})
+@MapperScan("com.atguigu.orderservice.mapper")
+public class OrderApplication {
     public static void main(String[] args) {
-        SpringApplication.run(EduApplication.class, args);
+
+        SpringApplication.run(OrderApplication.class, args);
     }
 }

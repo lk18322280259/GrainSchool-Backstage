@@ -14,14 +14,21 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * @Author luokai
+ */
+@SuppressWarnings("AlibabaThreadPoolCreation")
 @Component
 public class CosUtils {
 
-    public final static String tencentSecretId = Constant.secretId;
-    public final static String tencentSecretKey = Constant.secretKey;
-    public final static String tencentRegion = Constant.region;
+    public final static String TENCENT_SECRET_ID = Constant.secretId;
+    public final static String TENCENT_SECRET_KEY = Constant.secretKey;
+    public final static String TENCENT_REGION = Constant.region;
 
-    // 创建 TransferManager 实例，这个实例用来后续调用高级接口
+    /**
+     * 创建 TransferManager 实例，这个实例用来后续调用高级接口
+     * @return transferManager
+     */
     public static TransferManager createTransferManager() {
         // 创建一个 COSClient 实例，这是访问 COS 服务的基础实例。
         // 详细代码参见本页: 简单操作 -> 创建 COSClient
@@ -38,18 +45,21 @@ public class CosUtils {
         // 分块上传阈值和分块大小分别为 5MB 和 1MB
         TransferManagerConfiguration transferManagerConfiguration = new TransferManagerConfiguration();
         transferManagerConfiguration.setMultipartUploadThreshold(5*1024*1024);
-        transferManagerConfiguration.setMinimumUploadPartSize(1*1024*1024);
+        transferManagerConfiguration.setMinimumUploadPartSize(1024*1024);
         transferManager.setConfiguration(transferManagerConfiguration);
 
         return transferManager;
     }
 
-    // 创建 COSClient 实例，这个实例用来后续调用请求
+    /**
+     * 创建 COSClient 实例，这个实例用来后续调用请求
+     * @return Cos存储
+     */
     public static COSClient createCOSClient() {
         // 设置用户身份信息。
         // SECRETID 和 SECRETKEY 请登录访问管理控制台 https://console.cloud.tencent.com/cam/capi 进行查看和管理
-        String secretId = tencentSecretId;
-        String secretKey = tencentSecretKey;
+        String secretId = TENCENT_SECRET_ID;
+        String secretKey = TENCENT_SECRET_KEY;
         COSCredentials cred = new BasicCOSCredentials(secretId, secretKey);
 
         // ClientConfig 中包含了后续请求 COS 的客户端设置：
@@ -57,25 +67,19 @@ public class CosUtils {
 
         // 设置 bucket 的地域
         // COS_REGION 请参照 https://cloud.tencent.com/document/product/436/6224
-        clientConfig.setRegion(new Region(tencentRegion));
+        clientConfig.setRegion(new Region(TENCENT_REGION));
 
         // 设置请求协议, http 或者 https
         // 5.6.53 及更低的版本，建议设置使用 https 协议
         // 5.6.54 及更高版本，默认使用了 https
         clientConfig.setHttpProtocol(HttpProtocol.https);
 
-        // 以下的设置，是可选的：
-
         // 设置 socket 读取超时，默认 30s
         clientConfig.setSocketTimeout(30*1000);
         // 设置建立连接超时，默认 30s
         clientConfig.setConnectionTimeout(30*1000);
 
-        // 如果需要的话，设置 http 代理，ip 以及 port
-        //clientConfig.setHttpProxyIp("httpProxyIp");
-        //clientConfig.setHttpProxyPort(80);
-
-        // 生成 cos 客户端。
+        //生成 cos 客户端。
         return new COSClient(cred, clientConfig);
     }
 

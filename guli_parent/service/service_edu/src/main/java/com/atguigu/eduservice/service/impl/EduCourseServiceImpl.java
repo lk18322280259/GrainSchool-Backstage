@@ -425,4 +425,23 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         this.changeViewCount(id,++viewCount);
     }
 
+    /**
+     * 查询课程
+     * @param searchCourse 课程名
+     * @return 课程列表
+     */
+    @Override
+    public List<EduCourse> searchCourse(String searchCourse) {
+
+        if(StringUtils.isEmpty(searchCourse)) {
+            throw new GuliException(20001, "请输入要搜索的课程名");
+        }
+
+        LambdaQueryWrapper<EduCourse> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(EduCourse::getTitle, searchCourse);
+        List<EduCourse> eduCourseList = this.list(queryWrapper);
+
+        return eduCourseList;
+    }
+
 }

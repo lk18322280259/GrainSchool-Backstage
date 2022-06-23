@@ -75,4 +75,10 @@ public interface UcenterMemberService extends IService<UcenterMember> {
      */
     String getCallBackToken(String code, String state);
 
+    /**
+     * 根据token字符串获取用户信息
+     * @param id 用户id
+     * @return 用户信息
+     */
+    UcenterMember getUserInfoById(String id);
 }

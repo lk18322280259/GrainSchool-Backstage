@@ -1,15 +1,18 @@
 package com.atguigu.eduservice.controller.front;
 
 import com.atguigu.commonutils.R;
+import com.atguigu.commonutils.ordervo.CourseWebVoCommon;
 import com.atguigu.eduservice.entity.EduCourse;
 import com.atguigu.eduservice.entity.EduTeacher;
 import com.atguigu.eduservice.entity.frontvo.CourseFrontVo;
+import com.atguigu.eduservice.entity.frontvo.CourseWebVo;
 import com.atguigu.eduservice.service.EduCourseService;
 import com.atguigu.eduservice.service.EduTeacherService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,5 +51,20 @@ public class CourseFrontController {
         Map<String,Object> map = courseService.getCourseFrontList(coursePage, courseFrontVo);
 
         return R.ok().data(map);
+    }
+
+    /**
+     * 根据课程id得到课程相关信息
+     * @param courseId 课程id
+     * @return 课程信息
+     */
+    @GetMapping("getCourseInfoOrder/{courseId}")
+    public CourseWebVoCommon getCourseInfoOrder(@PathVariable String courseId) {
+
+        CourseWebVo courseWebVo = courseService.selectInfoWebById(courseId);
+        CourseWebVoCommon courseWebVoCommon = new CourseWebVoCommon();
+        BeanUtils.copyProperties(courseWebVo, courseWebVoCommon);
+
+        return courseWebVoCommon;
     }
 }

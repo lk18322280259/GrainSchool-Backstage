@@ -2,6 +2,7 @@ package com.atguigu.educenter.controller;
 
 
 import com.atguigu.commonutils.R;
+import com.atguigu.commonutils.ordervo.UcenterMemberCommon;
 import com.atguigu.educenter.entity.UcenterMember;
 import com.atguigu.educenter.entity.vo.RegisterVo;
 import com.atguigu.educenter.entity.vo.PwdLoginVo;
@@ -10,6 +11,7 @@ import com.atguigu.educenter.service.UcenterMemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -107,6 +109,21 @@ public class UcenterMemberController {
 
         UcenterMember member = memberService.showUserInfo(userId);
         return R.ok().data("user",member);
+    }
+
+    /**
+     * 远程调用通过用户id获得用户信息
+     * @param id 用户id
+     * @return 用户信息
+     */
+    @GetMapping("getUserInfo/{id}")
+    public UcenterMemberCommon getUserInfo(@PathVariable String id) {
+
+        //根据用户id获取用户信息
+        UcenterMember member = memberService.getUserInfoById(id);
+        UcenterMemberCommon memberCommon = new UcenterMemberCommon();
+        BeanUtils.copyProperties(member, memberCommon);
+        return memberCommon;
     }
 
 }

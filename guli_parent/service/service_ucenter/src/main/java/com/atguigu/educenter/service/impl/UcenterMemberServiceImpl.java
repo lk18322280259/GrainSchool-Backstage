@@ -360,4 +360,16 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         }
     }
 
+    /**
+     * 根据token字符串获取用户信息
+     * @param id 用户id
+     * @return 用户信息
+     */
+    @Override
+    public UcenterMember getUserInfoById(String id) {
+
+        UcenterMember member = this.getById(id);
+        return member;
+    }
+
 }

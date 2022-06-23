@@ -29,5 +29,5 @@ public interface EduCourseMapper extends BaseMapper<EduCourse> {
      * @param courseId 课程id
      * @return 课程学习详情界面
      */
-    CourseWebVo selectInfoWebById(String courseId);
+    public CourseWebVo selectInfoWebById(String courseId);
 }

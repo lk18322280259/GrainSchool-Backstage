@@ -1,5 +1,3 @@
-package com.atguigu.demo;
-
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -28,7 +26,7 @@ public class CodeGenerator {
         String projectPath = System.getProperty("user.dir");
 
         //① ==============改项目的绝对路径==============
-        gc.setOutputDir("D:\\Java\\项目\\谷粒学苑\\myCode\\guli_parent\\service\\service_edu" + "/src/main/java");
+        gc.setOutputDir("D:\\Java\\项目\\谷粒学苑\\myCode\\guli_parent\\service\\service_order" + "/src/main/java");
 
         gc.setAuthor("luokai");
         gc.setOpen(false); //生成后是否打开资源管理器
@@ -58,7 +56,7 @@ public class CodeGenerator {
 
         // ==============④ 改生成的包名==============
         pc.setParent("com.atguigu");
-        pc.setModuleName("eduservice"); //模块名
+        pc.setModuleName("orderservice"); //模块名
         pc.setController("controller");
         pc.setEntity("entity");
         pc.setService("service");
@@ -71,10 +69,10 @@ public class CodeGenerator {
         //数据库表名
 
         // ==============⑤ 改数据库表名==============
-        strategy.setInclude("edu_comment");
+        strategy.setInclude("t_order","t_pay_log");
 
         strategy.setNaming(NamingStrategy.underline_to_camel);//数据库表映射到实体的命名策略
-        strategy.setTablePrefix(pc.getModuleName() + "_"); //生成实体时去掉表前缀
+        strategy.setTablePrefix("t" + "_"); //生成实体时去掉表前缀
 
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);//数据库表字段映射到实体的命名策略
         strategy.setEntityLombokModel(true); // lombok 模型 @Accessors(chain = true) setter链式操作

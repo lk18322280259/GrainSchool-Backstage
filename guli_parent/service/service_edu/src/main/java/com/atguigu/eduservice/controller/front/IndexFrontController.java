@@ -9,10 +9,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -51,4 +48,19 @@ public class IndexFrontController {
 
         return R.ok().data("courseList",courseList).data("teacherList", teacherList);
     }
+
+    /**
+     * 查询课程
+     * @param searchCourse 课程名
+     * @return 课程列表
+     */
+
+    @GetMapping("searchCourse")
+    public R searchCourse(@RequestParam("courseName") String searchCourse) {
+
+        List<EduCourse> courseList = courseService.searchCourse(searchCourse);
+        return R.ok().data("courseList", courseList);
+    }
+
+
 }

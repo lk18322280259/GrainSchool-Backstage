@@ -127,4 +127,11 @@ public interface EduCourseService extends IService<EduCourse> {
      * @param id 课程id
      */
     void updatePageViewCount(String id);
+
+    /**
+     * 查询课程
+     * @param searchCourse 课程名
+     * @return 课程列表
+     */
+    List<EduCourse> searchCourse(String searchCourse);
 }
