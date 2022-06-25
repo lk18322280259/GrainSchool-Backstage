@@ -244,25 +244,4 @@ public class EduCourseController {
         courseService.changeBuyCount(id, buyCount);
         return R.ok();
     }
-
-    /**
-     * 根据ID查询课程
-     * @param courseId 课程id
-     * @return 课程信息
-     */
-    @GetMapping(value = "getCourseDetailInfoById/{courseId}")
-    @ApiOperation(value = "根据课程id查询课程详细信息(章节|视频|讲师等等)")
-    public R getCourseDetailInfoById(
-            @ApiParam(name = "courseId", value = "课程ID", required = true)
-            @PathVariable String courseId){
-
-        //查询课程信息和讲师信息
-        CourseWebVo courseWebVo = courseService.selectInfoWebById(courseId);
-
-        //查询当前课程的章节信息
-        List<ChapterVo> chapterVoList = chapterService.getChapterVideoByCourseId(courseId);
-
-        return R.ok().data("course", courseWebVo).data("chapterVoList", chapterVoList);
-    }
-
 }

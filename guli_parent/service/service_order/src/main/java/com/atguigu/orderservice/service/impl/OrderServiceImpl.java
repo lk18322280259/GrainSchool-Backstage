@@ -9,6 +9,7 @@ import com.atguigu.orderservice.entity.Order;
 import com.atguigu.orderservice.mapper.OrderMapper;
 import com.atguigu.orderservice.service.OrderService;
 import com.atguigu.orderservice.utils.OrderNoUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,5 +74,26 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
         //返回订单号
         return order.getOrderNo();
+    }
+
+    /**
+     * 根据课程id和用户id查询订单表中订单状态
+     * @param courseId 课程id
+     * @param memberId 用户id
+     * @return 是否购买
+     */
+    @Override
+    public boolean isBuyCourse(String courseId, String memberId) {
+
+        LambdaQueryWrapper<Order> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Order::getCourseId, courseId);
+        queryWrapper.eq(Order::getMemberId, memberId);
+        //1 代表已支付
+        queryWrapper.eq(Order::getStatus, 1);
+
+        int count = this.count(queryWrapper);
+
+        //订单表中存在该用户已支付该课程则表示购买过
+        return count>0;
     }
 }

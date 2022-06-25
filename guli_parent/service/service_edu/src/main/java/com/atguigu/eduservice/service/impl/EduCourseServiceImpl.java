@@ -1,5 +1,7 @@
 package com.atguigu.eduservice.service.impl;
 
+import com.atguigu.commonutils.JwtUtils;
+import com.atguigu.eduservice.client.OrderClient;
 import com.atguigu.eduservice.client.VodClient;
 import com.atguigu.eduservice.entity.*;
 import com.atguigu.eduservice.entity.frontvo.CourseFrontVo;
@@ -23,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +39,7 @@ import java.util.Map;
  * @since 2022-06-12
  */
 @Service
-@SuppressWarnings({"unchecked", "SpringJavaAutowiredFieldsWarningInspection", "DuplicatedCode"})
+@SuppressWarnings({"unchecked", "SpringJavaAutowiredFieldsWarningInspection", "DuplicatedCode", "AlibabaCollectionInitShouldAssignCapacity"})
 public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse> implements EduCourseService {
 
     @Autowired
@@ -53,6 +56,9 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     @Autowired
     private EduCourseMapper eduCourseMapper;
+
+    @Autowired
+    private OrderClient orderClient;
 
     /**
      * 微服务videoVod
@@ -360,23 +366,29 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
      * @return 分页带条件的课程整合
      */
     @Override
-    public Map<String, Object> getCourseFrontList(Page<EduCourse> coursePage, CourseFrontVo courseFrontVo) {
+    public Map<String, Object> getCourseFrontList(Page<EduCourse> coursePage, CourseFrontVo courseFrontVo, HttpServletRequest request) {
 
         LambdaQueryWrapper<EduCourse> wrapper = new LambdaQueryWrapper<>();
+        //只查询发布的课程
         String publishStatus = "Normal";
         wrapper.eq(EduCourse::getStatus, publishStatus);
+
+        //分类条件（非必须参数）
         wrapper.eq(StringUtils.isNotEmpty(courseFrontVo.getSubjectParentId()), EduCourse::getSubjectParentId, courseFrontVo.getSubjectParentId());
         wrapper.eq(StringUtils.isNotEmpty(courseFrontVo.getSubjectId()), EduCourse::getSubjectId, courseFrontVo.getSubjectId());
 
+        //排序条件（非必须参数）
+        wrapper.orderByDesc(StringUtils.isNotEmpty(courseFrontVo.getBuyCountSort()),EduCourse::getBuyCount);
+        wrapper.orderByDesc(StringUtils.isNotEmpty(courseFrontVo.getGmtCreateSort()),EduCourse::getGmtCreate);
+        wrapper.orderByDesc(StringUtils.isNotEmpty(courseFrontVo.getPriceSort()),EduCourse::getPrice);
 
-        if (StringUtils.isNotEmpty(courseFrontVo.getBuyCountSort())){
-            wrapper.orderByDesc(EduCourse::getBuyCount);
-        }
-        if (StringUtils.isNotEmpty(courseFrontVo.getGmtCreateSort())){
-            wrapper.orderByDesc(EduCourse::getGmtCreate);
-        }
-        if (StringUtils.isNotEmpty(courseFrontVo.getPriceSort())){
-            wrapper.orderByDesc(EduCourse::getPrice);
+
+        //查询是否登录
+        boolean isLogin = true;
+        String memberId = JwtUtils.getMemberIdByJwtToken(request);
+        if (StringUtils.isEmpty(memberId)) {
+            isLogin = false;
+            wrapper.eq(EduCourse::getPrice, 0);
         }
 
         this.page(coursePage, wrapper);
@@ -397,6 +409,8 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         map.put("total", total);
         map.put("hasNext", hasNext);
         map.put("hasPrevious", hasPrevious);
+
+        map.put("isLogin", isLogin);
 
         return map;
     }
@@ -428,17 +442,23 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     /**
      * 查询课程
      * @param searchCourse 课程名
+     * @param request 请求对象
      * @return 课程列表
      */
     @Override
-    public List<EduCourse> searchCourse(String searchCourse) {
+    public List<EduCourse> searchCourse(String searchCourse, HttpServletRequest request) {
 
         if(StringUtils.isEmpty(searchCourse)) {
             throw new GuliException(20001, "请输入要搜索的课程名");
         }
 
+        String memberId = JwtUtils.getMemberIdByJwtToken(request);
+
         LambdaQueryWrapper<EduCourse> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.like(EduCourse::getTitle, searchCourse);
+        if (StringUtils.isEmpty(memberId)) {
+            queryWrapper.eq(EduCourse::getPrice, 0);
+        }
         List<EduCourse> eduCourseList = this.list(queryWrapper);
 
         return eduCourseList;

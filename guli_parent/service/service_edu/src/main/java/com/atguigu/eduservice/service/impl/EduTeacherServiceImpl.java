@@ -1,5 +1,6 @@
 package com.atguigu.eduservice.service.impl;
 
+import com.atguigu.commonutils.JwtUtils;
 import com.atguigu.eduservice.entity.EduCourse;
 import com.atguigu.eduservice.entity.EduTeacher;
 import com.atguigu.eduservice.mapper.EduTeacherMapper;
@@ -8,9 +9,11 @@ import com.atguigu.eduservice.service.EduTeacherService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,10 +69,15 @@ public class EduTeacherServiceImpl extends ServiceImpl<EduTeacherMapper, EduTeac
     /**
      * 根据讲师id查询讲师基本信息和所讲课程信息
      * @param teacherId 讲师id
+     * @param request 请求对象
      * @return 讲师基本信息和所讲课程信息
      */
     @Override
-    public Map<Object, Object> getTeacherFrontInfo(String teacherId) {
+    public Map<Object, Object> getTeacherFrontInfo(String teacherId,HttpServletRequest request) {
+
+        //查询是否登录
+        boolean isLogin = true;
+        String memberId = JwtUtils.getMemberIdByJwtToken(request);
 
         //1、根据讲师id查询讲师基本信息
         EduTeacher teacher = this.getById(teacherId);
@@ -79,11 +87,17 @@ public class EduTeacherServiceImpl extends ServiceImpl<EduTeacherMapper, EduTeac
         String publishStatus = "Normal";
         wrapper.eq(EduCourse::getStatus, publishStatus);
         wrapper.eq(EduCourse::getTeacherId, teacherId);
+        //未登录显示课程
+        if (StringUtils.isEmpty(memberId)) {
+            isLogin = false;
+            wrapper.eq(EduCourse::getPrice, 0);
+        }
         List<EduCourse> courseList = courseService.list(wrapper);
 
         Map<Object, Object> map = new HashMap<>();
         map.put("teacher", teacher);
         map.put("courseList", courseList);
+        map.put("isLogin", isLogin);
 
         return map;
     }

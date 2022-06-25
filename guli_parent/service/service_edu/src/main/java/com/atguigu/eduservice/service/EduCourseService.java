@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -113,7 +114,7 @@ public interface EduCourseService extends IService<EduCourse> {
      * @param courseFrontVo 条件查询
      * @return 分页带条件的课程整合
      */
-    Map<String, Object> getCourseFrontList(Page<EduCourse> coursePage, CourseFrontVo courseFrontVo);
+    Map<String, Object> getCourseFrontList(Page<EduCourse> coursePage, CourseFrontVo courseFrontVo, HttpServletRequest request);
 
     /**
      * 获取课程信息
@@ -131,7 +132,8 @@ public interface EduCourseService extends IService<EduCourse> {
     /**
      * 查询课程
      * @param searchCourse 课程名
+     * @param request 请求对象
      * @return 课程列表
      */
-    List<EduCourse> searchCourse(String searchCourse);
+    List<EduCourse> searchCourse(String searchCourse, HttpServletRequest request);
 }

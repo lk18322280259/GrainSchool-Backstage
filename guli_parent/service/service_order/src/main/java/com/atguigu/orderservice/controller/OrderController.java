@@ -55,5 +55,19 @@ public class OrderController {
         return R.ok().data("order",order);
     }
 
+    /**
+     * 根据课程id和用户id查询订单表中订单状态
+     * @param courseId 课程id
+     * @param memberId 用户id
+     * @return 是否购买
+     */
+    @GetMapping("isBuyCourse/{courseId}/{memberId}")
+    public boolean isBuyCourse(@PathVariable String courseId,
+                               @PathVariable String memberId) {
+
+        boolean isBuy = orderService.isBuyCourse(courseId, memberId);
+        return isBuy;
+    }
+
 }
 

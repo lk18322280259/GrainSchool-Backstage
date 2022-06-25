@@ -41,6 +41,9 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
+    @Autowired
+    private UcenterMemberMapper ucenterMemberMapper;
+
     /**
      * 实现单点登录
      */
@@ -370,6 +373,17 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
 
         UcenterMember member = this.getById(id);
         return member;
+    }
+
+    /**
+     * 统计某一天的注册人数
+     * @param day 某一天
+     * @return 注册总人数
+     */
+    @Override
+    public Integer countRegisterByDay(String day) {
+
+        return ucenterMemberMapper.selectRegisterCount(day);
     }
 
 }

@@ -4,6 +4,7 @@ import com.atguigu.eduservice.entity.EduTeacher;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -26,7 +27,8 @@ public interface EduTeacherService extends IService<EduTeacher> {
     /**
      * 根据讲师id查询讲师基本信息和所讲课程信息
      * @param teacherId 讲师id
+     * @param request 请求对象
      * @return 讲师基本信息和所讲课程信息
      */
-    Map<Object, Object> getTeacherFrontInfo(String teacherId);
+    Map<Object, Object> getTeacherFrontInfo(String teacherId, HttpServletRequest request);
 }

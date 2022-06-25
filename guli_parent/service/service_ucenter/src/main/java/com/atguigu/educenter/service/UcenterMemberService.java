@@ -81,4 +81,11 @@ public interface UcenterMemberService extends IService<UcenterMember> {
      * @return 用户信息
      */
     UcenterMember getUserInfoById(String id);
+
+    /**
+     * 统计某一天的注册人数
+     * @param day 某一天
+     * @return 注册总人数
+     */
+    Integer countRegisterByDay(String day);
 }

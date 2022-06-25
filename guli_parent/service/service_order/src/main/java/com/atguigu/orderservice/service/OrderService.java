@@ -22,4 +22,12 @@ public interface OrderService extends IService<Order> {
      * @return 订单号
      */
     String createOrder(String courseId, HttpServletRequest request);
+
+    /**
+     * 根据课程id和用户id查询订单表中订单状态
+     * @param courseId 课程id
+     * @param memberId 用户id
+     * @return 是否购买
+     */
+    boolean isBuyCourse(String courseId, String memberId);
 }

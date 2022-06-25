@@ -2,10 +2,12 @@ package com.atguigu.msmservice.utils;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * @Author luokai
  */
+@Component
 public class Constant implements InitializingBean {
 
     @Value("${custom-parameters.send-msg.secret-id}")

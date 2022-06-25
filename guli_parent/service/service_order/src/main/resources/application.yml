@@ -28,6 +28,20 @@ spring:
   profiles:
     active: dev
 
+  # redis配置
+  redis:
+    host: 43.138.111.63
+    port: 6379
+    database: 0
+    timeout: 1800000
+    lettuce:
+      pool:
+        max-active: 20
+        max-wait: -1
+        #最大阻塞等待时间(负数表示没限制)
+        max-idle: 5
+        min-idle: 0
+
   #springcloud nacos服务地址
   cloud:
     nacos:
@@ -63,3 +77,18 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 3000
+
+# 自定义参数
+custom-parameters:
+  # 微信支付参数
+  wx-pay:
+    #关联的公众号appid
+    app-id: wx74862e0dfcf69954
+    #商户号
+    partner: 1558950191
+    #商户key
+    partner-key: T6m9iK73b0kn9g5v426MKfHQH7X8rKwb
+    #回调地址
+    notify-url: http://guli.shop/api/order/weixinPay/weixinNotify
+    #支付地址
+    addr: 127.0.0.1

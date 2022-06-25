@@ -1,5 +1,6 @@
 package com.atguigu.eduservice.controller.front;
 
+import com.atguigu.commonutils.JwtUtils;
 import com.atguigu.commonutils.R;
 import com.atguigu.eduservice.entity.EduCourse;
 import com.atguigu.eduservice.entity.EduTeacher;
@@ -8,9 +9,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -55,12 +58,16 @@ public class TeacherFrontController {
     @GetMapping("getTeacherFrontInfo/{teacherId}")
     public R getTeacherFrontInfo(
             @ApiParam(name = "teacherId", value = "讲师id", required = true)
-            @PathVariable String teacherId) {
+            @PathVariable String teacherId,
+            @ApiParam(name = "request", value = "请求对象", required = true)
+            HttpServletRequest request) {
 
-        Map<Object, Object> teacherInfo = teacherService.getTeacherFrontInfo(teacherId);
+        Map<Object, Object> teacherInfo = teacherService.getTeacherFrontInfo(teacherId, request);
         EduTeacher teacher = (EduTeacher) teacherInfo.get("teacher");
         List<EduCourse> courseList = (List<EduCourse>) teacherInfo.get("courseList");
 
-        return R.ok().data("teacher",teacher).data("courseList",courseList);
+        boolean isLogin = (boolean) teacherInfo.get("isLogin");
+
+        return R.ok().data("teacher",teacher).data("courseList",courseList).data("isLogin",isLogin);
     }
 }
