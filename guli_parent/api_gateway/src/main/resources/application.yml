@@ -1,0 +1,67 @@
+####  application-dev.yml
+# 端口
+server:
+  port: 8222
+
+#### application.yml
+spring:
+  # 服务名
+  application:
+    name: service-gateway
+  # nacos服务地址
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    # 使用服务名发现路由
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+
+      # service-edu服务
+      routes:
+        - id: service-cms # 设置路由id(最好也写成服务名)
+          uri: lb://service-cms # 设置路由的uri(nacos中注册的服务名)
+          predicates:
+          - Path=/educms/** # 设置路由断言，类似nginx中的路径匹配/eduservice/**
+
+        - id: service-cos # 设置路由id(最好也写成服务名)
+          uri: lb://service-cos # 设置路由的uri(nacos中注册的服务名)
+          predicates:
+          - Path=/educos/** # 设置路由断言，类似nginx中的路径匹配/eduservice/**
+
+        - id: service-edu # 设置路由id(最好也写成服务名)
+          uri: lb://service-edu # 设置路由的uri(nacos中注册的服务名)
+          predicates:
+          - Path=/eduservice/** # 设置路由断言，类似nginx中的路径匹配/eduservice/**
+
+        - id: service-msm # 设置路由id(最好也写成服务名)
+          uri: lb://service-msm # 设置路由的uri(nacos中注册的服务名)
+          predicates:
+          - Path=/edumsm/** # 设置路由断言，类似nginx中的路径匹配/eduservice/**
+
+        - id: service-order # 设置路由id(最好也写成服务名)
+          uri: lb://service-order # 设置路由的uri(nacos中注册的服务名)
+          predicates:
+          - Path=/orderservice/** # 设置路由断言，类似nginx中的路径匹配/eduservice/**
+
+        - id: service-oss # 设置路由id(最好也写成服务名)
+          uri: lb://service-oss # 设置路由的uri(nacos中注册的服务名)
+          predicates:
+          - Path=/eduoss/** # 设置路由断言，类似nginx中的路径匹配/eduservice/**
+
+        - id: service-statistics # 设置路由id(最好也写成服务名)
+          uri: lb://service-statistics # 设置路由的uri(nacos中注册的服务名)
+          predicates:
+          - Path=/edustatistics/** # 设置路由断言，类似nginx中的路径匹配/eduservice/**
+
+        - id: service-ucenter # 设置路由id(最好也写成服务名)
+          uri: lb://service-ucenter # 设置路由的uri(nacos中注册的服务名)
+          predicates:
+          - Path=/educenter/** # 设置路由断言，类似nginx中的路径匹配/eduservice/**
+
+        - id: service-vod # 设置路由id(最好也写成服务名)
+          uri: lb://service-vod # 设置路由的uri(nacos中注册的服务名)
+          predicates:
+          - Path=/eduvod/** # 设置路由断言，类似nginx中的路径匹配/eduservice/**

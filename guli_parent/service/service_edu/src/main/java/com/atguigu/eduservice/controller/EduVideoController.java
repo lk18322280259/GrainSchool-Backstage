@@ -23,7 +23,8 @@ import java.util.List;
 @Api("小节管理")
 @RestController
 @RequestMapping("/eduservice/video")
-@CrossOrigin
+@SuppressWarnings("AlibabaCommentsMustBeJavadocFormat")
+//@CrossOrigin
 public class EduVideoController {
 
     @Autowired

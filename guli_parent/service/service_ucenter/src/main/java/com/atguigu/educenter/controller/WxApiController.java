@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @Author luokai
  */
 @Api("微信API")
-@CrossOrigin
+@SuppressWarnings("AlibabaCommentsMustBeJavadocFormat")
+//@CrossOrigin
 @Controller
 @RequestMapping("/api/ucenter/wx")
 public class WxApiController {

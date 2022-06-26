@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @Author luokai
  */
 @Component
-@FeignClient("service-ucenter")
+@FeignClient(name="service-ucenter",fallback = UcenterClientImpl.class)
 public interface UcenterClient {
 
     /**

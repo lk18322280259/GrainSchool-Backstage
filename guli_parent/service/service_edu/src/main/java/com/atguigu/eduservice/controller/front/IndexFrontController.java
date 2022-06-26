@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * @Author luokai
+ */
 @RestController
 @RequestMapping("/eduservice/indexfront")
-@CrossOrigin
+@SuppressWarnings("AlibabaCommentsMustBeJavadocFormat")
+//@CrossOrigin
 @Api("前台查看首页信息")
 public class IndexFrontController {
 
@@ -40,7 +44,6 @@ public class IndexFrontController {
         //查询是否登录
         boolean isLogin = true;
         String memberId = JwtUtils.getMemberIdByJwtToken(request);
-
 
         // 查询前8个门课程
         LambdaQueryWrapper<EduCourse> courseWrapper = new LambdaQueryWrapper<>();

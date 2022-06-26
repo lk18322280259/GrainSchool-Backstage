@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @Author luokai
  */
 @Component
-@FeignClient("service-order")
+@FeignClient(name="service-order",fallback = OrderClientImpl.class)
 public interface OrderClient {
 
     /**

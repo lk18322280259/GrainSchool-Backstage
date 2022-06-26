@@ -20,7 +20,8 @@ import java.util.Map;
  * @since 2022-06-25
  */
 @Api("统计分析管理")
-@CrossOrigin
+@SuppressWarnings("AlibabaCommentsMustBeJavadocFormat")
+//@CrossOrigin
 @RestController
 @RequestMapping("/edustatistics/daily")
 public class StatisticsDailyController {

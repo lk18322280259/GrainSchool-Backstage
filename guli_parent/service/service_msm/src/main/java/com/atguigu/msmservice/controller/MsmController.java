@@ -9,10 +9,14 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * @Author luokai
+ */
 @Api("短信管理")
 @RestController
 @RequestMapping("/edumsm/msm")
-@CrossOrigin
+@SuppressWarnings("AlibabaCommentsMustBeJavadocFormat")
+//@CrossOrigin
 public class MsmController {
 
     @Autowired

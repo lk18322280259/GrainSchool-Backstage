@@ -25,7 +25,8 @@ import java.util.List;
 @Api("科目管理")
 @RestController
 @RequestMapping("/eduservice/subject")
-@CrossOrigin
+@SuppressWarnings("AlibabaCommentsMustBeJavadocFormat")
+//@CrossOrigin
 public class EduSubjectController {
 
     @Autowired

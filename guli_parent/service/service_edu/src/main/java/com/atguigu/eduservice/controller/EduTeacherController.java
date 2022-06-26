@@ -27,7 +27,8 @@ import java.util.List;
 @Api("讲师管理")
 @RestController
 @RequestMapping("/eduservice/teacher")
-@CrossOrigin //解决跨域
+@SuppressWarnings("AlibabaCommentsMustBeJavadocFormat")
+//@CrossOrigin
 public class EduTeacherController {
 
     //注入service
@@ -39,7 +40,7 @@ public class EduTeacherController {
      * 1 查询讲师表所有数据
      * rest风格
      *
-     * @return
+     * @return 讲师列表
      */
     @ApiOperation("查询所有讲师接口")
     @GetMapping("findAll")
@@ -53,8 +54,8 @@ public class EduTeacherController {
     /**
      * 2 逻辑删除讲师的方法
      *
-     * @param id
-     * @return
+     * @param id 讲师id
+     * @return 成功
      */
     @ApiOperation("逻辑删除讲师接口")
     @DeleteMapping("{id}")
@@ -70,9 +71,9 @@ public class EduTeacherController {
     /**
      * 3 讲师分页功能
      *
-     * @param current
-     * @param limit
-     * @return
+     * @param current 当前页
+     * @param limit 每页条数
+     * @return 分页列表
      */
     @ApiOperation("讲师分页查询接口")
     @GetMapping("pageTeacher/{current}/{limit}")
@@ -87,7 +88,8 @@ public class EduTeacherController {
         //调用方法实现分页
         teacherService.page(pageTeacher, null);
 
-        long total = pageTeacher.getTotal(); //总记录数
+        //总记录数
+        long total = pageTeacher.getTotal();
         List<EduTeacher> records = pageTeacher.getRecords();
 
         return R.ok().data("total", total).data("rows", records);
@@ -96,10 +98,10 @@ public class EduTeacherController {
     /**
      * 4 条件查询带分页方法
      *
-     * @param current
-     * @param limit
-     * @param teacherQueryVo
-     * @return
+     * @param current 当前页
+     * @param limit 每页条数
+     * @param teacherQueryVo 条件查询
+     * @return 分页列表
      * @RequestBody 使用json传递数据，把json数据封装到对应对象中，必须使用post请求，required = false表示当前参数可以没有
      * @ResponseBody 返回数据：json数据
      */
@@ -146,8 +148,8 @@ public class EduTeacherController {
 
         //调用方法实现分页
         teacherService.page(pageTeacher, wrapper);
-
-        long total = pageTeacher.getTotal(); //总记录数
+        //总记录数
+        long total = pageTeacher.getTotal();
         List<EduTeacher> records = pageTeacher.getRecords();
 
         return R.ok().data("total", total).data("rows", records);
@@ -155,8 +157,8 @@ public class EduTeacherController {
 
     /**
      * 添加讲师
-     * @param eduTeacher
-     * @return
+     * @param eduTeacher 讲师
+     * @return 成功
      */
     @ApiOperation("添加讲师接口")
     @PostMapping("addTeacher")
@@ -170,8 +172,8 @@ public class EduTeacherController {
 
     /**
      * 根据id查询讲师
-     * @param id
-     * @return
+     * @param id 讲师id
+     * @return 讲师
      */
     @ApiOperation("根据id查询讲师接口")
     @GetMapping("getTeacher/{id}")
@@ -185,8 +187,8 @@ public class EduTeacherController {
 
     /**
      * 讲师修改
-     * @param eduTeacher
-     * @return
+     * @param eduTeacher 讲师
+     * @return 成功
      */
     @ApiOperation("讲师修改接口")
     @PostMapping("updateTeacher")

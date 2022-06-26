@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * @Author luokai
+ */
 @Api("前台查看幻灯片")
 @RestController
 @RequestMapping("/educms/bannerfront")
-@CrossOrigin
+@SuppressWarnings("AlibabaCommentsMustBeJavadocFormat")
+//@CrossOrigin
 public class BannerFrontController {
 
     @Autowired

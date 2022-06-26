@@ -1,5 +1,8 @@
 package com.atguigu.msmservice.common;
 
+/**
+ * @Author luokai
+ */
 public class Constant {
 
     public static final String secretId = "AKIDX0V3SjmbGwdM1c8whMxRTXaVHqFYikeL";

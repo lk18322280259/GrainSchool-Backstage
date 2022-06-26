@@ -28,7 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 @Api("用户管理")
 @RestController
 @RequestMapping("/educenter/member")
-@CrossOrigin
+@SuppressWarnings("AlibabaCommentsMustBeJavadocFormat")
+//@CrossOrigin
 public class UcenterMemberController {
 
     @Autowired
@@ -40,7 +41,7 @@ public class UcenterMemberController {
      * @return token
      */
     @PostMapping("loginByPwd")
-    @ApiOperation("用户验证码登录接口")
+    @ApiOperation("用户密码登录接口")
     public R loginByPwd(
             @ApiParam(name = "pwdLoginVo", value = "密码登录对象封装", required = true)
             @RequestBody PwdLoginVo pwdLoginVo) {
@@ -56,7 +57,7 @@ public class UcenterMemberController {
      * @return token
      */
     @PostMapping("loginByCode")
-    @ApiOperation("用户密码登录接口")
+    @ApiOperation("用户验证码登录接口")
     public R loginByCode(
             @ApiParam(name = "verCodeLoginVo", value = "验证码登录对象封装", required = true)
             @RequestBody VerCodeLoginVo verCodeLoginVo) {

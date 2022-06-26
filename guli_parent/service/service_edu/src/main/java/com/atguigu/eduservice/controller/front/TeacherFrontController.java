@@ -1,6 +1,5 @@
 package com.atguigu.eduservice.controller.front;
 
-import com.atguigu.commonutils.JwtUtils;
 import com.atguigu.commonutils.R;
 import com.atguigu.eduservice.entity.EduCourse;
 import com.atguigu.eduservice.entity.EduTeacher;
@@ -9,7 +8,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,10 +18,10 @@ import java.util.Map;
 /**
  * @Author luokai
  */
-@SuppressWarnings({"unchecked", "SpringJavaAutowiredFieldsWarningInspection"})
 @RestController
 @RequestMapping("/eduservice/teacherfront")
-@CrossOrigin
+@SuppressWarnings({"AlibabaCommentsMustBeJavadocFormat", "unchecked"})
+//@CrossOrigin
 @Api("前台查看讲师信息")
 public class TeacherFrontController {
 

@@ -29,10 +29,10 @@ import java.util.Map;
  * @author luokai
  * @since 2022-06-23
  */
-@SuppressWarnings({"AlibabaCollectionInitShouldAssignCapacity", "unchecked"})
 @RestController
 @RequestMapping("/eduservice/comment")
-@CrossOrigin
+@SuppressWarnings({"AlibabaCommentsMustBeJavadocFormat", "unchecked"})
+//@CrossOrigin
 public class CommentFrontController {
 
     @Autowired

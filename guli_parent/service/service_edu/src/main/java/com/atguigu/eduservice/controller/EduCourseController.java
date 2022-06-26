@@ -32,11 +32,11 @@ import java.util.List;
  * @author testjava
  * @since 2022-06-12
  */
-@SuppressWarnings("AlibabaAvoidCommentBehindStatement")
+@SuppressWarnings({"AlibabaAvoidCommentBehindStatement", "AlibabaCommentsMustBeJavadocFormat"})
 @Api("课程管理")
 @RestController
 @RequestMapping("/eduservice/course")
-@CrossOrigin
+//@CrossOrigin
 public class EduCourseController {
 
     @Autowired

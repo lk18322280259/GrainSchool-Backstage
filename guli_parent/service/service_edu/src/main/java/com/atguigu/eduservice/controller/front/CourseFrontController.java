@@ -5,13 +5,11 @@ import com.atguigu.commonutils.R;
 import com.atguigu.commonutils.ordervo.CourseWebVoCommon;
 import com.atguigu.eduservice.client.OrderClient;
 import com.atguigu.eduservice.entity.EduCourse;
-import com.atguigu.eduservice.entity.EduTeacher;
 import com.atguigu.eduservice.entity.chapter.ChapterVo;
 import com.atguigu.eduservice.entity.frontvo.CourseFrontVo;
 import com.atguigu.eduservice.entity.frontvo.CourseWebVo;
 import com.atguigu.eduservice.service.EduChapterService;
 import com.atguigu.eduservice.service.EduCourseService;
-import com.atguigu.eduservice.service.EduTeacherService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,10 +25,10 @@ import java.util.Map;
 /**
  * @Author luokai
  */
-@SuppressWarnings({"SpringJavaAutowiredFieldsWarningInspection"})
 @RestController
 @RequestMapping("/eduservice/coursefront")
-@CrossOrigin
+@SuppressWarnings("AlibabaCommentsMustBeJavadocFormat")
+//@CrossOrigin
 @Api("前台查看课程信息")
 public class CourseFrontController {
 
@@ -71,7 +69,7 @@ public class CourseFrontController {
      * @param courseId 课程id
      * @return 课程信息
      */
-    @GetMapping(value = "getCourseDetailInfoById/{courseId}")
+    @PostMapping(value = "getCourseDetailInfoById/{courseId}")
     @ApiOperation(value = "根据课程id查询课程详细信息(章节|视频|讲师等等)")
     public R getCourseDetailInfoById(
             @ApiParam(name = "courseId", value = "课程ID", required = true)

@@ -24,7 +24,8 @@ import java.util.List;
 @Api("章节管理")
 @RestController
 @RequestMapping("/eduservice/chapter")
-@CrossOrigin
+@SuppressWarnings("AlibabaCommentsMustBeJavadocFormat")
+//@CrossOrigin
 public class EduChapterController {
 
     @Autowired

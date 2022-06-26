@@ -76,7 +76,7 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 3000
+            timeoutInMilliseconds: 10000
 
 # 自定义参数
 custom-parameters:

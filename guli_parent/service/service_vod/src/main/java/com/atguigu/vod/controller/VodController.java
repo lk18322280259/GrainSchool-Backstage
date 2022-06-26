@@ -13,10 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+/**
+ * @Author luokai
+ */
+@SuppressWarnings("AlibabaCommentsMustBeJavadocFormat")
+//@CrossOrigin
 @Api("腾讯云点播")
 @RestController
 @RequestMapping("/eduvod/video")
-@CrossOrigin
 public class VodController {
 
     @Autowired

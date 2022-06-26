@@ -19,7 +19,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author luokai
  * @since 2022-06-24
  */
-@CrossOrigin
+@SuppressWarnings("AlibabaCommentsMustBeJavadocFormat")
+//@CrossOrigin
 @RestController
 @RequestMapping("/orderservice/order")
 public class OrderController {

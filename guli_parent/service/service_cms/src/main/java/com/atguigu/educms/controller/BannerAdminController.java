@@ -22,7 +22,8 @@ import org.springframework.web.bind.annotation.*;
 @Api("幻灯片后台管理")
 @RestController
 @RequestMapping("/educms/banneradmin")
-@CrossOrigin
+@SuppressWarnings("AlibabaCommentsMustBeJavadocFormat")
+//@CrossOrigin
 public class BannerAdminController {
 
     @Autowired

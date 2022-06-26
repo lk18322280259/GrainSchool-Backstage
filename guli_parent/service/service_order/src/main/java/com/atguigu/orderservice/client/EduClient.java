@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @Author luokai
  */
 @Component
-@FeignClient("service-edu")
+@FeignClient(name="service-edu",fallback = EduClientImpl.class)
 public interface EduClient {
 
     /**

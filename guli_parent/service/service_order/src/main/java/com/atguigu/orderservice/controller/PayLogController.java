@@ -16,8 +16,8 @@ import java.util.Map;
  * @author luokai
  * @since 2022-06-24
  */
-@SuppressWarnings("unchecked")
-@CrossOrigin
+@SuppressWarnings({"AlibabaCommentsMustBeJavadocFormat", "unchecked"})
+//@CrossOrigin
 @RestController
 @RequestMapping("/orderservice/paylog")
 public class PayLogController {

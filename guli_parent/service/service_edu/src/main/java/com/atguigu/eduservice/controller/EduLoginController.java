@@ -4,10 +4,14 @@ import com.atguigu.commonutils.R;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * @Author luokai
+ */
 @Api("登录管理")
 @RestController
 @RequestMapping("/eduservice/user")
-@CrossOrigin //解决跨域
+@SuppressWarnings("AlibabaCommentsMustBeJavadocFormat")
+//@CrossOrigin
 public class EduLoginController {
 
     //login
