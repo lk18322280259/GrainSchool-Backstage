@@ -5,6 +5,7 @@
     <modules>
         <module>service</module>
         <module>common</module>
+        <module>canal_client</module>
         <!--<module>service_base</module>-->
     </modules>
     <parent>
