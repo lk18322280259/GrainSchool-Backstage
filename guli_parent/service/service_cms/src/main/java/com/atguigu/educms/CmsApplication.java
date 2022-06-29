@@ -6,7 +6,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * 服务注册注解
+ * 幻灯片服务
+ * 服务注册注解 @EnableDiscoveryClient
  * @Author luokai
  */
 @EnableDiscoveryClient

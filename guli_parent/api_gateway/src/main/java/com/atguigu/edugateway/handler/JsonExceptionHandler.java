@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.DefaultErrorWebExceptionHandler;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.reactive.function.server.*;
 
 import java.util.HashMap;
@@ -19,6 +18,7 @@ import java.util.Map;
  * @author yinjihuan
  *
  */
+@SuppressWarnings({"AlibabaCollectionInitShouldAssignCapacity", "NullableProblems"})
 public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler {
 
     public JsonExceptionHandler(ErrorAttributes errorAttributes, ResourceProperties resourceProperties,
@@ -41,7 +41,7 @@ public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler {
 
     /**
      * 指定响应处理方法为JSON处理的方法
-     * @param errorAttributes
+     * @param errorAttributes 错误属性
      */
     @Override
     protected RouterFunction<ServerResponse> getRoutingFunction(ErrorAttributes errorAttributes) {
@@ -50,7 +50,7 @@ public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler {
 
     /**
      * 根据code获取对应的HttpStatus
-     * @param errorAttributes
+     * @param errorAttributes 错误属性
      */
     @Override
     protected int getHttpStatus(Map<String, Object> errorAttributes) {

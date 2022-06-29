@@ -19,14 +19,22 @@ import java.util.UUID;
 import static com.atguigu.msmservice.utils.CosUtils.createTransferManager;
 import static com.atguigu.msmservice.utils.CosUtils.shutdownTransferManager;
 
+/**
+ * 对象存储上传头像
+ * @Author luokai
+ */
 @Service
 public class CosServiceImpl implements CosService {
 
-    public final static String tencentRegion = Constant.region;
-    public final static String tencentBucketName = Constant.bucketName;
-    public final static String tencentFilePath = Constant.filePath;
+    public final static String TENCENT_REGION = Constant.region;
+    public final static String TENCENT_BUCKET_NAME = Constant.bucketName;
+    public final static String TENCENT_FILE_PATH = Constant.filePath;
 
-    //上传头像
+    /**
+     * 上传头像
+     * @param file 前端文件
+     * @return 存储对象URL
+     */
     @Override
     public String uploadFileAvatar(MultipartFile file) {
 
@@ -35,11 +43,11 @@ public class CosServiceImpl implements CosService {
         TransferManager transferManager = createTransferManager();
 
         // 存储桶的命名格式为 BucketName-APPID，此处填写的存储桶名称必须为此格式
-        String bucketName = tencentBucketName;
+        String bucketName = TENCENT_BUCKET_NAME;
 
         //构建文件名
         //构建日期路径：guli-edu/avatar/2022-06-01
-        String filePathPrefix = tencentFilePath + new DateTime().toString("yyyy/MM/dd");
+        String filePathPrefix = TENCENT_FILE_PATH + new DateTime().toString("yyyy/MM/dd");
 
         //文件名：uuid.扩展名
         String original = file.getOriginalFilename();
@@ -74,12 +82,10 @@ public class CosServiceImpl implements CosService {
 
             //上传图片成功标志 ETag="ad2d870ffebeb029e55027e24a931f68"
             String eTag = uploadResult.getETag();
-            //返回路径
-            String url = null;
+
             if (eTag==null) {
                 throw new GuliException(20001,"头像上传失败");
             }
-
 
         } catch (IOException |InterruptedException e) {
             throw new GuliException(20001,"头像上传失败");
@@ -91,6 +97,6 @@ public class CosServiceImpl implements CosService {
 
         //构建图片路径
         //对象地址 https://lk-1303842271.cos.ap-beijing.myqcloud.com/guli-edu/avatar/2022/06/17/97b2e244271a4e3fafc2582c5701ec1c.png
-        return "https://" + bucketName + ".cos."+ tencentRegion +".myqcloud.com/" + key;
+        return "https://" + bucketName + ".cos."+ TENCENT_REGION +".myqcloud.com/" + key;
     }
 }

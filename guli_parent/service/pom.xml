@@ -21,6 +21,7 @@
         <module>service_ucenter</module>
         <module>service_order</module>
         <module>service_statistics</module>
+        <module>service_acl</module>
     </modules>
 
     <properties>
@@ -142,6 +143,12 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
+        </dependency>
+
+        <!--nacos管理配置文件-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
     </dependencies>
 

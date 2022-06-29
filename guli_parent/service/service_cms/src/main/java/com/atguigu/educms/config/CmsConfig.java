@@ -44,12 +44,14 @@ public class CmsConfig {
     /**
      * SQL 执行性能分析插件
      * 开发环境使用，线上不推荐。 maxTime 指的是 sql 最大执行时长
+     * @return ""
      */
     @Bean
     @Profile({"dev","test"})// 设置 dev test 环境开启
     public PerformanceInterceptor performanceInterceptor() {
         PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
-        performanceInterceptor.setMaxTime(500);//ms，超过此处设置的ms则sql不执行
+        //ms，超过此处设置的ms则sql不执行
+        performanceInterceptor.setMaxTime(500);
         performanceInterceptor.setFormat(true);
         return performanceInterceptor;
     }

@@ -7,6 +7,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+/**
+ * 用户类
+ * @Author luokai
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,20 +21,28 @@ public class User {
     private Integer age;
     private String email;
 
-    //版本号
+    /**
+     * 版本号
+     */
     @Version
     @TableField(fill = FieldFill.INSERT)
     private Integer version;
 
-    //创建时间
+    /**
+     * 创建时间
+     */
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
-    //更新时间
+    /**
+     * 更新时间
+     */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
-    //逻辑删除
+    /**
+     * 逻辑删除
+     */
     @TableLogic
     @TableField(fill = FieldFill.INSERT)
     private Integer deleted;

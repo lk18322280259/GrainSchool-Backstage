@@ -19,9 +19,14 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
 
-@EnableCaching //开启缓存
+/**
+ * Redis配置
+ * 开启Redis @EnableCaching
+ * @Author luokai
+ */
+@EnableCaching
 @Configuration
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "AliDeprecation", "deprecation"})
 public class RedisConfig extends CachingConfigurerSupport {
 
     @Bean

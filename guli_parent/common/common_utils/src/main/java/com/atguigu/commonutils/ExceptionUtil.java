@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+/**
+ * 统一异常处理
+ * @Author luokai
+ */
 public class ExceptionUtil {
 
     public static String getMessage(Exception e) {

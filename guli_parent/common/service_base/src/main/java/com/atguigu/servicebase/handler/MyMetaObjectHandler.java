@@ -6,6 +6,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+/**
+ * 数据库字段自动填充
+ * @Author luokai
+ */
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override

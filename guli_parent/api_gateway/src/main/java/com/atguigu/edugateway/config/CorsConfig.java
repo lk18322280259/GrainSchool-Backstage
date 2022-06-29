@@ -11,7 +11,6 @@ import org.springframework.web.util.pattern.PathPatternParser;
 /**
  * @author luokai
  */
-@SuppressWarnings("NullableProblems")
 @Configuration
 public class CorsConfig {
     @Bean

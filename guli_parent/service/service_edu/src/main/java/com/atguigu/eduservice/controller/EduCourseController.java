@@ -29,7 +29,7 @@ import java.util.List;
  * 课程 前端控制器
  * </p>
  *
- * @author testjava
+ * @author luokai
  * @since 2022-06-12
  */
 @SuppressWarnings({"AlibabaAvoidCommentBehindStatement", "AlibabaCommentsMustBeJavadocFormat"})

@@ -15,9 +15,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
+ * 对象存储工具类
  * @Author luokai
  */
-@SuppressWarnings("AlibabaThreadPoolCreation")
+@SuppressWarnings({"AlibabaThreadPoolCreation", "AlibabaLowerCamelCaseVariableNaming"})
 @Component
 public class CosUtils {
 

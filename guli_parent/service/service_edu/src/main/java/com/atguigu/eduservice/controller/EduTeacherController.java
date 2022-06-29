@@ -21,7 +21,7 @@ import java.util.List;
  * 讲师 前端控制器
  * </p>
  *
- * @author testjava
+ * @author luokai
  * @since 2022-05-24
  */
 @Api("讲师管理")

@@ -3,7 +3,11 @@ package com.atguigu.commonutils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-
+/**
+ * 生成MD5
+ * @Author luokai
+ */
+@SuppressWarnings({"ForLoopReplaceableByForEach", "AlibabaClassNamingShouldBeCamel"})
 public final class MD5 {
 
     public static String encrypt(String strSrc) {

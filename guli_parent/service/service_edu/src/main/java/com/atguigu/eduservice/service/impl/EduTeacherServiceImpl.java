@@ -23,7 +23,7 @@ import java.util.Map;
  * 讲师 服务实现类
  * </p>
  *
- * @author testjava
+ * @author luokai
  * @since 2022-05-24
  */
 @SuppressWarnings({"unchecked", "SpringJavaAutowiredFieldsWarningInspection", "AlibabaCollectionInitShouldAssignCapacity", "DuplicatedCode"})

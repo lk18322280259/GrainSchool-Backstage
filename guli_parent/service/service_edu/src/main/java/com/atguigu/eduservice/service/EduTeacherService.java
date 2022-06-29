@@ -12,7 +12,7 @@ import java.util.Map;
  * 讲师 服务类
  * </p>
  *
- * @author testjava
+ * @author luokai
  * @since 2022-05-24
  */
 public interface EduTeacherService extends IService<EduTeacher> {

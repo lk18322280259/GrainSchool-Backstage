@@ -11,7 +11,7 @@ import java.util.List;
  * 课程 服务类
  * </p>
  *
- * @author testjava
+ * @author luokai
  * @since 2022-06-12
  */
 public interface EduChapterService extends IService<EduChapter> {

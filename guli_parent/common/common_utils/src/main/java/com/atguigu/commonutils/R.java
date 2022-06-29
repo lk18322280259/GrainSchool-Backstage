@@ -1,13 +1,17 @@
 package com.atguigu.commonutils;
 
 import io.swagger.annotations.ApiModelProperty;
-import jdk.nashorn.internal.objects.annotations.Constructor;
 import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
 
-//统一返回结果
+
+/**
+ * 统一返回结果
+ * @Author luokai
+ */
+@SuppressWarnings({"AlibabaCommentsMustBeJavadocFormat", "AlibabaClassNamingShouldBeCamel", "unused"})
 @Data
 public class R {
 
@@ -21,7 +25,7 @@ public class R {
     private String message;
 
     @ApiModelProperty(value = "返回数据")
-    private Map<String, Object> data = new HashMap<String, Object>();
+    private Map<String, Object> data = new HashMap<>();
 
     //构造方法私有
     private R(){}

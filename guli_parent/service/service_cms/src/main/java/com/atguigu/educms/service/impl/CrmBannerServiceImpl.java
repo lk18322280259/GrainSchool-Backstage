@@ -15,22 +15,25 @@ import java.util.List;
  * 首页banner表 服务实现类
  * </p>
  *
- * @author testjava
+ * @author luokai
  * @since 2022-06-19
  */
 @Service
 public class CrmBannerServiceImpl extends ServiceImpl<CrmBannerMapper, CrmBanner> implements CrmBannerService {
 
-
-    //获取首页
+    /**
+     * 获取首页
+     * key需要再加引号 @Cacheable
+     * @return 幻灯片列表
+     */
     @Override
-    @Cacheable(key="'getAllBannerList'", value = "banner") //key需要再加引号
+    @Cacheable(key="'getAllBannerList'", value = "banner")
     public List<CrmBanner> getAllBannerList() {
 
         LambdaQueryWrapper<CrmBanner> queryWrapper = new LambdaQueryWrapper<>();
         //noinspection unchecked
         queryWrapper.orderByDesc(CrmBanner::getSort);
-        queryWrapper.last("limit 2");
+        queryWrapper.last("limit 5");
 
         List<CrmBanner> bannerList = this.list(queryWrapper);
 

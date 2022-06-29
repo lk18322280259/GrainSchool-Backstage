@@ -19,7 +19,7 @@ import java.util.List;
  * 课程科目 前端控制器
  * </p>
  *
- * @author testjava
+ * @author luokai
  * @since 2022-06-02
  */
 @Api("科目管理")

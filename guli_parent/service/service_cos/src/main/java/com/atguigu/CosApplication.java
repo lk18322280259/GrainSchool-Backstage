@@ -7,6 +7,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
+ * 腾讯云对象存储服务
  * @Author luokai
  */
 @EnableSwagger2

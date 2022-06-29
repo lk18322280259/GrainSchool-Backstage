@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * 课程简介 服务实现类
  * </p>
  *
- * @author testjava
+ * @author luokai
  * @since 2022-06-12
  */
 @Service

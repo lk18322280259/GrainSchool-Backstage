@@ -65,3 +65,8 @@ spring:
           uri: lb://service-vod # 设置路由的uri(nacos中注册的服务名)
           predicates:
           - Path=/eduvod/** # 设置路由断言，类似nginx中的路径匹配/eduservice/**
+
+        - id: service-acl # 设置路由id(最好也写成服务名)
+          uri: lb://service-acl # 设置路由的uri(nacos中注册的服务名)
+          predicates:
+          - Path=/admin/acl/** # 设置路由断言，类似nginx中的路径匹配/eduservice/**

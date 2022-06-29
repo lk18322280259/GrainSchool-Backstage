@@ -7,15 +7,16 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
+ * 扫描service中的swagger @ComponentScan(basePackages = {"com.atguigu"})
+ * 发现服务 @EnableFeignClients
+ * 服务注册注解 @EnableDiscoveryClient
  * @Author luokai
+ *
  */
-@SpringBootApplication
-//扫描service中的swagger
-@ComponentScan(basePackages = {"com.atguigu"})
-//服务注册注解
 @EnableDiscoveryClient
-//发现服务
 @EnableFeignClients
+@SpringBootApplication
+@ComponentScan(basePackages = {"com.atguigu"})
 public class EduApplication {
 
     public static void main(String[] args) {

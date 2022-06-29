@@ -10,12 +10,15 @@ import java.util.List;
  * 首页banner表 服务类
  * </p>
  *
- * @author testjava
+ * @author luokai
  * @since 2022-06-19
  */
 public interface CrmBannerService extends IService<CrmBanner> {
 
-    //获取首页
+    /**
+     * 获取首页幻灯片
+     * @return 幻灯片列表
+     */
     List<CrmBanner> getAllBannerList();
 
 }

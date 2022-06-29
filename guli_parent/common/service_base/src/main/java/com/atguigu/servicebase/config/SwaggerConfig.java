@@ -11,8 +11,14 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@Configuration //配置类
-@EnableSwagger2 //Swagger注解
+/**
+ * Swagger测试接口配置
+ * 开启Swagger @EnableSwagger2
+ * @Author luokai
+ */
+@SuppressWarnings("Guava")
+@EnableSwagger2
+@Configuration
 public class SwaggerConfig {
 
     @Bean
@@ -22,7 +28,7 @@ public class SwaggerConfig {
                 .groupName("webApi")
                 .apiInfo(webApiInfo())
                 .select()
-                .paths(Predicates.not(PathSelectors.regex("/admin/.*")))
+                //.paths(Predicates.not(PathSelectors.regex("/admin/.*")))
                 .paths(Predicates.not(PathSelectors.regex("/error.*")))
                 .build();
 
@@ -34,7 +40,7 @@ public class SwaggerConfig {
                 .title("网站-课程中心API文档")
                 .description("本文档描述了课程中心微服务接口定义")
                 .version("1.0")
-                .contact(new Contact("Luokai", "http://luokai.com", "464132475@qq.com"))
+                .contact(new Contact("Luokai", "http://dandanit.cloud", "464132475@qq.com"))
                 .build();
     }
 }

@@ -10,14 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
- * @author
+ * 解析Token
+ * @author luokai
  */
-@SuppressWarnings("JavadocDeclaration")
+@SuppressWarnings({"JavadocDeclaration", "unused"})
 public class JwtUtils {
 
-    //Token过期时间
+    /**
+     * Token过期时间
+     */
     public static final long EXPIRE = 1000 * 60 * 60 * 24;
-    //密钥
+    /**
+     * 密钥
+     */
     public static final String APP_SECRET = "ukc8BDbRigUDaY6pZFfWus2jZWLPHO";
 
     public static String getJwtToken(String id, String nickname){

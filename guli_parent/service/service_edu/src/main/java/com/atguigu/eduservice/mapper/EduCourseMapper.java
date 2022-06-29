@@ -11,7 +11,7 @@ import org.mapstruct.Mapper;
  * 课程 Mapper 接口
  * </p>
  *
- * @author testjava
+ * @author luokai
  * @since 2022-06-12
  */
 @Mapper

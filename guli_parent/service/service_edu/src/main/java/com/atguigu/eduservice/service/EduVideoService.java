@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 课程视频 服务类
  * </p>
  *
- * @author testjava
+ * @author luokai
  * @since 2022-06-12
  */
 public interface EduVideoService extends IService<EduVideo> {

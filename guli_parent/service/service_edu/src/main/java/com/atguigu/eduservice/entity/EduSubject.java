@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
  * 课程科目
  * </p>
  *
- * @author testjava
+ * @author luokai
  * @since 2022-06-02
  */
 @Data
