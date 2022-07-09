@@ -9,7 +9,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://43.138.111.63:3306/guli?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
     username: root
-    password: MySQL5.7
+    password: xxxxxx
 
     hikari:
       connection-test-query: SELECT 1
@@ -84,9 +84,9 @@ custom-parameters:
     # 是否启用短信发送验证码
     enable: false
     # 腾讯云账户密钥对Id
-    secret-id: AKIDX0V3SjmbGwdM1c8whMxRTXaVHqFYikeL
+    secret-id: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     # 腾讯云账户密钥对Key
-    secret-key: c5OfwFZoHZlssjZJxhIgu7Nf2SsLuMn6
+    secret-key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     # SDK默认超时时间
     conn-timeout: 5
     # 短信应用ID
