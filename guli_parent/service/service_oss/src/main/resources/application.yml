@@ -40,7 +40,7 @@ aliyun:
   oss:
     file:
       endpoint: oss-cn-beijing.aliyuncs.com
-      keyid: LTAI5tL8JJfJg6JPAYZhFTW9
-      keysecret: t4iVKdDiu8gHD6VaKd2BpYHT7uUk0r
+      keyid: xxxxxxxxxxxxxxxxxxxxxxxxxxx
+      keysecret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
       bucketname: guli-edu-lk
       filepath: guli-edu/avatar/
